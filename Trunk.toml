@@ -1,0 +1,24 @@
+
+public_url = "/"
+
+[build]
+target = "index.html"
+
+[serve]
+address = "127.0.0.1"
+port = 8080
+open = false
+spa = false  # <--- this disables SPA fallback
+
+[[copy]]
+source = "contract_client.js"
+dest = "contract_client.js"
+
+[[copy]]
+source = "contract-bindings"
+dest = "contract-bindings"
+
+
+[[copy]]
+source = "hello.js"
+dest = "hello.js"
