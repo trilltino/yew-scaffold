@@ -1,10 +1,10 @@
-
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <title>Yew Freighter Local Test</title>
-
+  
+  <!-- Freighter API Setup (unchanged) -->
   <script type="module">
     import {
       isConnected,
@@ -16,10 +16,9 @@
       getNetworkDetails,
       signTransaction,
       signMessage,
-      addToken
-    } from "/vendor/freighter-api.js";
-
-    // Make it visible to Rust WASM
+    } from "/static/vendor/freighter-api.js";
+    
+    // Make Freighter API visible to Rust WASM
     window.freighterApi = {
       isConnected,
       isAllowed,
@@ -30,21 +29,36 @@
       getNetworkDetails,
       signTransaction,
       signMessage,
-      addToken
     };
+    
+    console.log("✅ Freighter API loaded");
   </script>
+  
+  <!-- Simple Contract Test Setup -->
+  <script>
+    console.log("🚀 Setting up minimal contract test...");
+    
+    // Create simple HelloClient for testing
+    window.HelloClient = class {
+      constructor(options) {
+        console.log("✅ HelloClient created for testing");
+      }
+      
+      async hello(params) {
+        console.log("📞 HelloClient.hello called with:", params);
+        const toValue = params.to || "World";
+        const result = "Hello " + toValue;
+        console.log("📤 Returning:", result);
+        return result;
+      }
+    };
+    
+    console.log("🎉 Minimal test setup ready!");
+  </script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stellar-freighter-api/4.1.0/index.min.js"></script>
   <link data-trunk rel="copy-dir" href="static" />
   <link data-trunk rel="rust" href="Cargo.toml" />
 </head>
 <body></body>
 </html>
-
-
-
-
-
-
-
-
-
-

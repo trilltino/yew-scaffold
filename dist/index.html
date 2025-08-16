@@ -1,10 +1,10 @@
-
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <title>Yew Freighter Local Test</title>
-
+  
+  <!-- Freighter API Setup (unchanged) -->
   <script type="module">
     import {
       isConnected,
@@ -16,10 +16,9 @@
       getNetworkDetails,
       signTransaction,
       signMessage,
-      addToken
-    } from "/vendor/freighter-api.js";
-
-    // Make it visible to Rust WASM
+    } from "/static/vendor/freighter-api.js";
+    
+    // Make Freighter API visible to Rust WASM
     window.freighterApi = {
       isConnected,
       isAllowed,
@@ -30,14 +29,39 @@
       getNetworkDetails,
       signTransaction,
       signMessage,
-      addToken
     };
+    
+    console.log("✅ Freighter API loaded");
   </script>
+  
+  <!-- Simple Contract Test Setup -->
+  <script>
+    console.log("🚀 Setting up minimal contract test...");
+    
+    // Create simple HelloClient for testing
+    window.HelloClient = class {
+      constructor(options) {
+        console.log("✅ HelloClient created for testing");
+      }
+      
+      async hello(params) {
+        console.log("📞 HelloClient.hello called with:", params);
+        const toValue = params.to || "World";
+        const result = "Hello " + toValue;
+        console.log("📤 Returning:", result);
+        return result;
+      }
+    };
+    
+    console.log("🎉 Minimal test setup ready!");
+  </script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stellar-freighter-api/4.1.0/index.min.js"></script>
   
   
 <script type="module">
-import init, * as bindings from '/yew-scaffold-2e1853401482343c.js';
-const wasm = await init({ module_or_path: '/yew-scaffold-2e1853401482343c_bg.wasm' });
+import init, * as bindings from '/yew-scaffold-f9a6593d89436ccc.js';
+const wasm = await init({ module_or_path: '/yew-scaffold-f9a6593d89436ccc_bg.wasm' });
 
 
 window.wasmBindings = bindings;
@@ -46,7 +70,7 @@ window.wasmBindings = bindings;
 dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
 
 </script>
-<link rel="modulepreload" href="/yew-scaffold-2e1853401482343c.js" crossorigin="anonymous" integrity="sha384-lGg4mQOImVW8nolvt9MxHjurpX9FTx3untst1I+7ZoF2SbMJxyvvK25MOn5vHUet"><link rel="modulepreload" href="/snippets/yew-scaffold-9602bb5779e722b8/contract_client.js" crossorigin="anonymous" integrity="sha384-ZwHxKrKdDRNDXDO9okZFThwi3dMrx1AwSYa8J8Xww+0edjYZv3ap1a0aB0M54Hcv"><link rel="preload" href="/yew-scaffold-2e1853401482343c_bg.wasm" crossorigin="anonymous" integrity="sha384-3lS5Kng5w0RiulbCjGOth7n/BsKwGYrEEZRYZXGAkJd7ouPyVDnUSq7YdwPhj0jl" as="fetch" type="application/wasm"></head>
+<link rel="modulepreload" href="/yew-scaffold-f9a6593d89436ccc.js" crossorigin="anonymous" integrity="sha384-P6ExyXM1/mCSFznG5QJriZZg5TnxDnVSN6PIc3uk2YcvyqxmsxbY4ztoMe6qXGHY"><link rel="modulepreload" href="/snippets/yew-scaffold-9602bb5779e722b8/contract_client.js" crossorigin="anonymous" integrity="sha384-ZwHxKrKdDRNDXDO9okZFThwi3dMrx1AwSYa8J8Xww+0edjYZv3ap1a0aB0M54Hcv"><link rel="preload" href="/yew-scaffold-f9a6593d89436ccc_bg.wasm" crossorigin="anonymous" integrity="sha384-+QwIkRUNFuLg4Wm9bmn9l7hGjZKO77vGn0MDSQjr+PFVtWPkqD8W/6kBpowh9uwA" as="fetch" type="application/wasm"></head>
 <body><script>"use strict";
 
 (function () {
@@ -178,13 +202,3 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
 })()
 </script></body>
 </html>
-
-
-
-
-
-
-
-
-
-
