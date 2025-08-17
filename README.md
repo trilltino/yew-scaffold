@@ -34,15 +34,16 @@ Where Scaffold Stellar helps JS developers onboard to Soroban, this template hel
 
 
 # Dev prerequisites
+Install Rust
 rustup target add wasm32-unknown-unknown
 cargo install trunk
+git clone https://github.com/trilltino/yew-scaffold
+cd yew-scaffold
+cargo build
+trunk serve
 
-# Clone from template
-git clone https://github.com/<you>/yew-soroban-template
-cd yew-soroban-template
 
-# Configure
-cp .env.example .env   # set CONTRACT_ID and SOROBAN_NETWORK
+# To Do
+Tutorial
 
-# Run
-trunk serve --open
+
