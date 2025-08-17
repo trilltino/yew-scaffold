@@ -1,0 +1,10 @@
+{
+  "buildCommand": "trunk build --release --public-url /yew-scaffold/",
+  "outputDirectory": "dist",
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/dist/$1"
+    }
+  ]
+}
