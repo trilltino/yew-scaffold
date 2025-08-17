@@ -1,6 +1,8 @@
 use yew::prelude::*;
 use yew_router::prelude::*;
 
+
+
 mod nav;
 mod freighter;
 mod helloworld_bindings;
