@@ -1,62 +1,51 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+}
+</style>
   <meta charset="utf-8">
   <title>Yew Freighter Local Test</title>
   
-  <!-- Freighter API Setup (unchanged) -->
-  <script type="module">
-    import {
-      isConnected,
-      isAllowed,
-      setAllowed,
-      requestAccess,
-      getAddress,
-      getNetwork,
-      getNetworkDetails,
-      signTransaction,
-      signMessage,
-    } from "/static/vendor/freighter-api.js";
-    
-    // Make Freighter API visible to Rust WASM
-    window.freighterApi = {
-      isConnected,
-      isAllowed,
-      setAllowed,
-      requestAccess,
-      getAddress,
-      getNetwork,
-      getNetworkDetails,
-      signTransaction,
-      signMessage,
-    };
-    
-    console.log("✅ Freighter API loaded");
-  </script>
-  
-  <!-- Simple Contract Test Setup -->
-  <script>
-    console.log("🚀 Setting up minimal contract test...");
-    
-    // Create simple HelloClient for testing
-    window.HelloClient = class {
-      constructor(options) {
-        console.log("✅ HelloClient created for testing");
-      }
-      
-      async hello(params) {
-        console.log("📞 HelloClient.hello called with:", params);
-        const toValue = params.to || "World";
-        const result = "Hello " + toValue;
-        console.log("📤 Returning:", result);
-        return result;
-      }
-    };
-    
-    console.log("🎉 Minimal test setup ready!");
-  </script>
-  
+  <!-- Load Freighter API from CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/stellar-freighter-api/4.1.0/index.min.js"></script>
+  
+  <script type="module">
+    window.addEventListener('load', async () => {
+      // Freighter check
+      if (window.freighterApi) {
+        console.log('✅ Freighter API loaded successfully');
+        console.log('Available methods:', Object.keys(window.freighterApi));
+      } else {
+        console.error('❌ Freighter API not loaded');
+      }
+
+      // Load the bundled stellar client
+      try {
+        console.log('🔍 Loading bundled stellar-client.js...');
+        const { Client, networks } = await import('/static/stellar-client.js');
+        
+        window.StellarClient = Client;
+        window.stellarNetworks = networks;
+        
+        console.log('✅ Bundled Stellar Client loaded:', !!window.StellarClient);
+        console.log('✅ Networks:', networks);
+      } catch (error) {
+        console.error('❌ Failed to load bundled Stellar client:', error);
+        console.error('Error details:', error.message);
+      }
+    });
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600&family=Alfa+Slab+One&display=swap" rel="stylesheet">
   <link data-trunk rel="copy-dir" href="static" />
   <link data-trunk rel="rust" href="Cargo.toml" />
 </head>
