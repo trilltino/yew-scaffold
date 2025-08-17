@@ -4,18 +4,18 @@
   <meta charset="utf-8">
   <title>Yew + Freighter Test</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
+  
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body, html { margin: 0; padding: 0; }
   </style>
-
-  <!-- ✅ Important for GitHub Pages paths -->
-  <base href="/yew-scaffold/">
-
+  
+  <!-- FIXED: Use /yew-scaffold/ as base for Vercel deployment -->
+  <base href="/yew-scaffold/" />
+  
   <!-- Freighter API -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/stellar-freighter-api/4.1.0/index.min.js"></script>
-
+  
   <script type="module">
     window.addEventListener('load', async () => {
       if (window.freighterApi) {
@@ -26,22 +26,37 @@
 
       try {
         console.log('🔍 Loading bundled stellar-client.js...');
-        // ✅ Path is relative to base href
-        const { Client, networks } = await import("./static/stellar-client.js");
-
+        
+        // FIXED: Try multiple paths with fallback to CDN
+        let stellarModule;
+        
+        try {
+          // Try relative path first (works if static files are deployed)
+          stellarModule = await import("./static/stellar-client.js");
+          console.log('✅ Loaded from relative path');
+        } catch (error) {
+          console.warn('⚠️ Relative path failed, trying CDN fallback...');
+          // Fallback to CDN if static files not deployed properly
+          stellarModule = await import('https://cdn.jsdelivr.net/gh/trilltino/yew-scaffold@main/static/stellar-client.js');
+          console.log('✅ Loaded from CDN fallback');
+        }
+        
+        const { Client, networks } = stellarModule;
+        
         window.StellarClient = Client;
         window.stellarNetworks = networks;
-
+        
         console.log('✅ Bundled Stellar Client loaded:', !!window.StellarClient);
         console.log('✅ Networks:', networks);
       } catch (error) {
         console.error('❌ Failed to load bundled Stellar client:', error);
+        console.error('❌ Error details:', error.message);
       }
     });
   </script>
-
+  
   <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600&family=Alfa+Slab+One&display=swap" rel="stylesheet">
-
+  
   <!-- Trunk injects Yew app bundle -->
   <link data-trunk rel="copy-dir" href="static" />
   <link data-trunk rel="rust" href="Cargo.toml" />
@@ -51,5 +66,3 @@
   <noscript>Enable JavaScript to run this app.</noscript>
 </body>
 </html>
-
-

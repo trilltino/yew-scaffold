@@ -1,5 +1,5 @@
 [build]
-public_url = "/"
+public_url = "/yew-scaffold/"
 inject_scripts = true
 wasm_opt = false
 
@@ -9,6 +9,8 @@ port = 8080
 open = false
 spa = true  # ✅ required for yew-router SPA
 
+[[asset]]
+dir = "static"
 
 [[copy]]
 source = "static"
