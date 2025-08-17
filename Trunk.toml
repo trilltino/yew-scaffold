@@ -1,6 +1,6 @@
 [build]
-target = "index.html"
 public_url = "/"
+inject_scripts = true
 wasm_opt = false
 
 [serve]
@@ -9,7 +9,7 @@ port = 8080
 open = false
 spa = true  # ✅ required for yew-router SPA
 
+
 [[copy]]
 source = "static"
 dest = "static"
-
