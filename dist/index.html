@@ -10,9 +10,8 @@
     body, html { margin: 0; padding: 0; }
   </style>
 
-  <!-- Base URL: app lives at domain root -->
-<base href="/yew-scaffold/" />
-
+  <!-- IMPORTANT: deploy at root -->
+  <base href="/" />
 
   <!-- Freighter API -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/stellar-freighter-api/4.1.0/index.min.js"></script>
@@ -39,11 +38,11 @@
     });
   </script>
 
-  <!-- Let Trunk handle injecting the .js and .wasm -->
+  <!-- Trunk tells it to build WASM app -->
   
 <script type="module">
-import init, * as bindings from '/yew-scaffold/yew-scaffold-ccf4f0947cb2633.js';
-const wasm = await init({ module_or_path: '/yew-scaffold/yew-scaffold-ccf4f0947cb2633_bg.wasm' });
+import init, * as bindings from '/yew-scaffold.js';
+const wasm = await init({ module_or_path: '/yew-scaffold_bg.wasm' });
 
 
 window.wasmBindings = bindings;
@@ -53,9 +52,10 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
 
 </script>
   
-<link rel="modulepreload" href="/yew-scaffold/yew-scaffold-ccf4f0947cb2633.js" crossorigin="anonymous"><link rel="preload" href="/yew-scaffold/yew-scaffold-ccf4f0947cb2633_bg.wasm" crossorigin="anonymous" as="fetch" type="application/wasm"></head>
+<link rel="modulepreload" href="/yew-scaffold.js" crossorigin="anonymous"><link rel="preload" href="/yew-scaffold_bg.wasm" crossorigin="anonymous" as="fetch" type="application/wasm"></head>
 <body>
   <div id="app"></div>
   <noscript>Enable JavaScript to run this app.</noscript>
 </body>
 </html>
+

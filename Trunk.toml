@@ -1,9 +1,8 @@
 [build]
-public_url = "/yew-scaffold/"
-inject_scripts = true
-wasm_opt = false
-integrity = false
-sri = false
+release = true
+public_url = "/"
+filehash = false
+dist = "dist"
 
 [serve]
 address = "127.0.0.1"

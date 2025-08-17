@@ -10,9 +10,8 @@
     body, html { margin: 0; padding: 0; }
   </style>
 
-  <!-- Base URL: app lives at domain root -->
-<base href="/yew-scaffold/" />
-
+  <!-- IMPORTANT: deploy at root -->
+  <base href="/" />
 
   <!-- Freighter API -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/stellar-freighter-api/4.1.0/index.min.js"></script>
@@ -39,7 +38,7 @@
     });
   </script>
 
-  <!-- Let Trunk handle injecting the .js and .wasm -->
+  <!-- Trunk tells it to build WASM app -->
   <link data-trunk rel="rust" href="Cargo.toml" data-integrity="none">
   <link data-trunk rel="copy-dir" href="static" />
 </head>
@@ -48,3 +47,4 @@
   <noscript>Enable JavaScript to run this app.</noscript>
 </body>
 </html>
+
