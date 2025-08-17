@@ -1,23 +1,11 @@
-
 [build]
 target = "index.html"
 public_url = "/yew-scaffold/"
-wasm_opt = false
+wasm_opt = false   # skip wasm-opt so it doesn’t crash on Windows
 
 [serve]
-address = "127.0.0.1"
-port = 8080
 open = false
-spa = false  # <--- this disables SPA fallback
-
-[[copy]]
-source = "contract_client.js"
-dest = "contract_client.js"
-
-[[copy]]
-source = "contract-bindings"
-dest = "contract-bindings"
-
+spa = false        # we’ll handle SPA fallback manually (404.html)
 
 [[copy]]
 source = "static"
