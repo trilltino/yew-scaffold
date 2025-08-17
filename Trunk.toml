@@ -2,6 +2,7 @@
 public_url = "/yew-scaffold/"
 inject_scripts = true
 wasm_opt = false
+integrity = false
 
 [serve]
 address = "127.0.0.1"
