@@ -27,3 +27,18 @@ Scaffold Stellar provides a React-based starter with contract integration and wa
 This Yew template provides the same foundation, but for a Rust-only frontend workflow.
 Both aim to reduce boilerplate, accelerate prototyping, and standardize dApp structure.
 Where Scaffold Stellar helps JS developers onboard to Soroban, this template helps Rust developers stay in their ecosystem without switching stacks.
+
+
+# Dev prerequisites
+rustup target add wasm32-unknown-unknown
+cargo install trunk
+
+# Clone from template
+git clone https://github.com/<you>/yew-soroban-template
+cd yew-soroban-template
+
+# Configure
+cp .env.example .env   # set CONTRACT_ID and SOROBAN_NETWORK
+
+# Run
+trunk serve --open
