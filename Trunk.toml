@@ -21,4 +21,4 @@ dest = "contract-bindings"
 
 [[copy]]
 source = "static"
-dest = "static
+dest = "static"
