@@ -26,7 +26,7 @@
 
       try {
         console.log('🔍 Loading bundled stellar-client.js...');
-        // ✅ Correct path for GitHub Pages under /yew-scaffold/
+        // ✅ Path is relative to base href
         const { Client, networks } = await import("./static/stellar-client.js");
 
         window.StellarClient = Client;
@@ -42,12 +42,12 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600&family=Alfa+Slab+One&display=swap" rel="stylesheet">
 
-  <!-- Trunk injects Yew app bundle here -->
+  <!-- Trunk injects Yew app bundle -->
   
   
 <script type="module">
-import init, * as bindings from '/yew-scaffold/yew-scaffold-8696d029b0b00afe.js';
-const wasm = await init({ module_or_path: '/yew-scaffold/yew-scaffold-8696d029b0b00afe_bg.wasm' });
+import init, * as bindings from '/yew-scaffold/yew-scaffold-598d232d4b132843.js';
+const wasm = await init({ module_or_path: '/yew-scaffold/yew-scaffold-598d232d4b132843_bg.wasm' });
 
 
 window.wasmBindings = bindings;
@@ -56,10 +56,11 @@ window.wasmBindings = bindings;
 dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
 
 </script>
-<link rel="modulepreload" href="/yew-scaffold/yew-scaffold-8696d029b0b00afe.js" crossorigin="anonymous" integrity="sha384-Md9HHk7yfXVissfR49lqCM9apoMNMidUXHOcQtPVS6/QaIYmJdLoj9nCi16ELjZK"><link rel="preload" href="/yew-scaffold/yew-scaffold-8696d029b0b00afe_bg.wasm" crossorigin="anonymous" integrity="sha384-h/rjWaakuJUGRG6F0lnfJou8JGspy0iRumR264yRac/wRTpZTAtMor5WstRxJu8V" as="fetch" type="application/wasm"></head>
+<link rel="modulepreload" href="/yew-scaffold/yew-scaffold-598d232d4b132843.js" crossorigin="anonymous" integrity="sha384-Md9HHk7yfXVissfR49lqCM9apoMNMidUXHOcQtPVS6/QaIYmJdLoj9nCi16ELjZK"><link rel="preload" href="/yew-scaffold/yew-scaffold-598d232d4b132843_bg.wasm" crossorigin="anonymous" integrity="sha384-U3pMjdfAL/rb0ZfSAEjGqkh3rTm2/dTsCK43Ezam8bP10dPv4vw59yQR4O5td4dV" as="fetch" type="application/wasm"></head>
 <body>
   <div id="app"></div>
   <noscript>Enable JavaScript to run this app.</noscript>
 </body>
 </html>
+
 

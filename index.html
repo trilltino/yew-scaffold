@@ -26,7 +26,7 @@
 
       try {
         console.log('🔍 Loading bundled stellar-client.js...');
-        // ✅ Correct path for GitHub Pages under /yew-scaffold/
+        // ✅ Path is relative to base href
         const { Client, networks } = await import("./static/stellar-client.js");
 
         window.StellarClient = Client;
@@ -42,7 +42,7 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600&family=Alfa+Slab+One&display=swap" rel="stylesheet">
 
-  <!-- Trunk injects Yew app bundle here -->
+  <!-- Trunk injects Yew app bundle -->
   <link data-trunk rel="copy-dir" href="static" />
   <link data-trunk rel="rust" href="Cargo.toml" />
 </head>
@@ -51,4 +51,5 @@
   <noscript>Enable JavaScript to run this app.</noscript>
 </body>
 </html>
+
 

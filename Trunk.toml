@@ -1,14 +1,15 @@
 [build]
 target = "index.html"
-public_url = "/yew-scaffold/"
+public_url = "/yew-scaffold/"  # ✅ required for GitHub Pages
 wasm_opt = false
 
 [serve]
 address = "127.0.0.1"
 port = 8080
 open = false
-spa = true  # enable SPA fallback for Yew Router
+spa = true  # ✅ required for yew-router SPA
 
 [[copy]]
 source = "static"
 dest = "static"
+
