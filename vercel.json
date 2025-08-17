@@ -1,25 +1,3 @@
-
 {
-  "buildCommand": "cargo install trunk && trunk build --release --no-sri",
-  "outputDirectory": "dist",
-  "headers": [
-    {
-      "source": "/yew-scaffold/(.*)\\.js",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "application/javascript"
-        }
-      ]
-    },
-    {
-      "source": "/yew-scaffold/(.*)\\.wasm",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "application/wasm"
-        }
-      ]
-    }
-  ]
+  "outputDirectory": "dist"
 }
