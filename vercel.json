@@ -1,5 +1,6 @@
+
 {
-  "buildCommand": "trunk build --release --no-sri",
+  "buildCommand": "trunk builds --release --no-sri",
   "outputDirectory": "dist",
   "headers": [
     {
