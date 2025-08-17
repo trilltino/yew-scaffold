@@ -1,5 +1,0 @@
-{
- "buildCommand": "curl -L https://github.com/thedodd/trunk/releases/download/v0.17.5/trunk-x86_64-unknown-linux-gnu.tar.gz | tar -xz && ./trunk build --release --public-url /yew-scaffold/",
- "outputDirectory": "dist",
- "installCommand": "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && source $HOME/.cargo/env && rustup target add wasm32-unknown-unknown"
-}
