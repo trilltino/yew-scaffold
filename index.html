@@ -10,7 +10,7 @@
     body, html { margin: 0; padding: 0; }
   </style>
   
-  <!-- FIXED: Use /yew-scaffold/ as base for Vercel deployment -->
+  <!-- Base URL for Vercel deployment -->
   <base href="/yew-scaffold/" />
   
   <!-- Freighter API -->
@@ -18,39 +18,72 @@
   
   <script type="module">
     window.addEventListener('load', async () => {
+      // Check Freighter API
       if (window.freighterApi) {
         console.log('✅ Freighter API loaded', Object.keys(window.freighterApi));
       } else {
         console.error('❌ Freighter API not loaded');
       }
 
+      // Load Stellar Client with robust fallback
       try {
-        console.log('🔍 Loading bundled stellar-client.js...');
+        console.log('🔍 Loading stellar-client.js...');
         
-        // FIXED: Try multiple paths with fallback to CDN
         let stellarModule;
+        let loadedFrom = '';
         
-        try {
-          // Try relative path first (works if static files are deployed)
-          stellarModule = await import("./stellar-client.js");
-          console.log('✅ Loaded from relative path');
-        } catch (error) {
-          console.warn('⚠️ Relative path failed, trying CDN fallback...');
-          // Fallback to CDN if static files not deployed properly
-          stellarModule = await import('https://cdn.jsdelivr.net/gh/trilltino/yew-scaffold@main/static/stellar-client.js');
-          console.log('✅ Loaded from CDN fallback');
+        // Try all possible paths
+        const paths = [
+          './static/stellar-client.js',
+          './stellar-client.js', 
+          '/yew-scaffold/static/stellar-client.js',
+          '/yew-scaffold/stellar-client.js'
+        ];
+        
+        for (const path of paths) {
+          try {
+            console.log(`Trying path: ${path}`);
+            stellarModule = await import(path);
+            loadedFrom = path;
+            console.log(`✅ Loaded from: ${path}`);
+            break;
+          } catch (error) {
+            console.warn(`❌ Failed to load from ${path}:`, error.message);
+          }
         }
         
+        // Final fallback to CDN
+        if (!stellarModule) {
+          console.log('🌐 Trying CDN fallback...');
+          try {
+            stellarModule = await import('https://cdn.jsdelivr.net/gh/trilltino/yew-scaffold@main/static/stellar-client.js');
+            loadedFrom = 'CDN';
+            console.log('✅ Loaded from CDN fallback');
+          } catch (error) {
+            console.error('❌ CDN fallback also failed:', error.message);
+            throw new Error('All stellar-client loading methods failed');
+          }
+        }
+        
+        // Extract exports
         const { Client, networks } = stellarModule;
         
+        // Make globally available
         window.StellarClient = Client;
         window.stellarNetworks = networks;
         
-        console.log('✅ Bundled Stellar Client loaded:', !!window.StellarClient);
+        console.log(`✅ Stellar Client loaded from ${loadedFrom}`);
+        console.log('✅ StellarClient available:', !!window.StellarClient);
         console.log('✅ Networks:', networks);
+        
       } catch (error) {
-        console.error('❌ Failed to load bundled Stellar client:', error);
+        console.error('❌ Failed to load Stellar client:', error);
         console.error('❌ Error details:', error.message);
+        
+        // Set fallback values so app doesn't crash
+        window.StellarClient = null;
+        window.stellarNetworks = {};
+        console.log('⚠️ Running without Stellar client');
       }
     });
   </script>
