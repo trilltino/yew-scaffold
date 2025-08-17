@@ -1,28 +1,25 @@
 <img width="1918" height="990" alt="Screenshot 2025-08-17 123131" src="https://github.com/user-attachments/assets/a5c65996-605b-42f2-b33c-3896d10fdc6e" />
 
 Yew Template for Soroban dApps
-A Yew SPA wired directly to Soroban smart contracts.
-Built with Rust, compiled to WebAssembly using Trunk.
-Freighter wallet integration for account connection and signing.
-Client-side routing out of the box (About, Voters, Projects, 404).
-Deployable as static files, so end users only need a browser and Freighter.
+A Yew SPA wired directly to Soroban smart contracts
+Built with Rust, compiled to WebAssembly
+Freighter wallet integration
+Soroban Contract Frontend 
 
-Why it matters
+This template is a stepping stone to building an entire decentralized apps in Rust
 
-This template is a stepping stone to building an entire decentralized apps in Rust. 
+What Next?
 
-How it can scale
+Axum as backend
+fast , async-native, and composable  handles API routes, auth, and contract indexing
+Shared types: Define your domain types in a shared crate. Yew, Axum, and Soroban all use the same Rust structs - removes JSON parsing errors that occur in JS backends.
 
-Axum as backend: Instead of Express or Next.js, you add Axum. 
-It runs fast, async-native, and composable with tower middleware. It handles API routes, auth, and contract indexing with minimal boilerplate.
-Shared types: Define your domain types in a shared crate. Yew, Axum, and Soroban all use the same Rust structs. This removes JSON parsing errors that plague JS backends.
+Thinking Forward
 
-The bigger picture
-
-Yew + Axum + Soroban is more than just a template. It’s a path to a full-stack Rust ecosystem where: You don’t switch between Rust and JavaScript.
+Yew + Axum + Soroban is is a path to a full-stack Rust ecosystem where: You don’t switch between Rust and JavaScript.
 You write once, reuse everywhere.
 You get the speed and safety guarantees of Rust across all layers.
-This makes it possible to create teams of full-stack Rust developers who can build secure, scalable, production-grade dApps without relying on Node.js or TypeScript for the frontend/backend split.
+Opening the ecosystem to  full-stack Rust developers who can build , secure, scalable, production-grade dApps.
 
 Similarity to Scaffold Stellar
 
