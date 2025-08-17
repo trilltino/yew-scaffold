@@ -46,8 +46,8 @@
   
   
 <script type="module">
-import init, * as bindings from '/yew-scaffold/yew-scaffold-598d232d4b132843.js';
-const wasm = await init({ module_or_path: '/yew-scaffold/yew-scaffold-598d232d4b132843_bg.wasm' });
+import init, * as bindings from '/yew-scaffold-598d232d4b132843.js';
+const wasm = await init({ module_or_path: '/yew-scaffold-598d232d4b132843_bg.wasm' });
 
 
 window.wasmBindings = bindings;
@@ -56,7 +56,7 @@ window.wasmBindings = bindings;
 dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
 
 </script>
-<link rel="modulepreload" href="/yew-scaffold/yew-scaffold-598d232d4b132843.js" crossorigin="anonymous" integrity="sha384-Md9HHk7yfXVissfR49lqCM9apoMNMidUXHOcQtPVS6/QaIYmJdLoj9nCi16ELjZK"><link rel="preload" href="/yew-scaffold/yew-scaffold-598d232d4b132843_bg.wasm" crossorigin="anonymous" integrity="sha384-U3pMjdfAL/rb0ZfSAEjGqkh3rTm2/dTsCK43Ezam8bP10dPv4vw59yQR4O5td4dV" as="fetch" type="application/wasm"></head>
+<link rel="modulepreload" href="/yew-scaffold-598d232d4b132843.js" crossorigin="anonymous" integrity="sha384-Md9HHk7yfXVissfR49lqCM9apoMNMidUXHOcQtPVS6/QaIYmJdLoj9nCi16ELjZK"><link rel="preload" href="/yew-scaffold-598d232d4b132843_bg.wasm" crossorigin="anonymous" integrity="sha384-U3pMjdfAL/rb0ZfSAEjGqkh3rTm2/dTsCK43Ezam8bP10dPv4vw59yQR4O5td4dV" as="fetch" type="application/wasm"></head>
 <body>
   <div id="app"></div>
   <noscript>Enable JavaScript to run this app.</noscript>

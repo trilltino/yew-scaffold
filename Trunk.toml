@@ -1,6 +1,6 @@
 [build]
 target = "index.html"
-public_url = "/yew-scaffold/"  # ✅ required for GitHub Pages
+public_url = "/"
 wasm_opt = false
 
 [serve]
