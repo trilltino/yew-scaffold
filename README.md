@@ -8,20 +8,24 @@ Client-side routing out of the box (About, Voters, Projects, 404).
 Deployable as static files, so end users only need a browser and Freighter.
 
 Why it matters
-This template shows how you can build entire decentralized apps in Rust. 
+
+This template is a stepping stone to building an entire decentralized apps in Rust. 
 
 How it can scale
+
 Axum as backend: Instead of Express or Next.js, you add Axum. 
 It runs fast, async-native, and composable with tower middleware. It handles API routes, auth, and contract indexing with minimal boilerplate.
 Shared types: Define your domain types in a shared crate. Yew, Axum, and Soroban all use the same Rust structs. This removes JSON parsing errors that plague JS backends.
 
 The bigger picture
+
 Yew + Axum + Soroban is more than just a template. It’s a path to a full-stack Rust ecosystem where: You don’t switch between Rust and JavaScript.
 You write once, reuse everywhere.
 You get the speed and safety guarantees of Rust across all layers.
 This makes it possible to create teams of full-stack Rust developers who can build secure, scalable, production-grade dApps without relying on Node.js or TypeScript for the frontend/backend split.
 
 Similarity to Scaffold Stellar
+
 This project plays a role for Yew that Scaffold Stellar does for React/Next.js:
 Scaffold Stellar provides a React-based starter with contract integration and wallet support.
 This Yew template provides the same foundation, but for a Rust-only frontend workflow.
