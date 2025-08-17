@@ -1,4 +1,5 @@
-public_url = "/"
+public_url = "/yew-scaffold/"
+
 
 [build]
 target = "index.html"
