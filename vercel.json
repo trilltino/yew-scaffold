@@ -1,0 +1,5 @@
+{
+"buildCommand": "trunk build --release",
+"outputDirectory": "dist",
+"rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}
