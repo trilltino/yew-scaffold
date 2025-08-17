@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Yew + Freighter Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, html { margin: 0; padding: 0; }
+  </style>
+
+  <!-- ✅ Important for GitHub Pages paths -->
+  <base href="/yew-scaffold/">
+
+  <!-- Freighter API -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stellar-freighter-api/4.1.0/index.min.js"></script>
+
+  <script type="module">
+    window.addEventListener('load', async () => {
+      if (window.freighterApi) {
+        console.log('✅ Freighter API loaded', Object.keys(window.freighterApi));
+      } else {
+        console.error('❌ Freighter API not loaded');
+      }
+
+      try {
+        console.log('🔍 Loading bundled stellar-client.js...');
+        // ✅ Path is relative to base href
+        const { Client, networks } = await import("./static/stellar-client.js");
+
+        window.StellarClient = Client;
+        window.stellarNetworks = networks;
+
+        console.log('✅ Bundled Stellar Client loaded:', !!window.StellarClient);
+        console.log('✅ Networks:', networks);
+      } catch (error) {
+        console.error('❌ Failed to load bundled Stellar client:', error);
+      }
+    });
+  </script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600&family=Alfa+Slab+One&display=swap" rel="stylesheet">
+
+  <!-- Trunk injects Yew app bundle -->
+  
+  
+<script type="module">
+import init, * as bindings from '/yew-scaffold/yew-scaffold-598d232d4b132843.js';
+const wasm = await init({ module_or_path: '/yew-scaffold/yew-scaffold-598d232d4b132843_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
+<link rel="modulepreload" href="/yew-scaffold/yew-scaffold-598d232d4b132843.js" crossorigin="anonymous" integrity="sha384-Md9HHk7yfXVissfR49lqCM9apoMNMidUXHOcQtPVS6/QaIYmJdLoj9nCi16ELjZK"><link rel="preload" href="/yew-scaffold/yew-scaffold-598d232d4b132843_bg.wasm" crossorigin="anonymous" integrity="sha384-U3pMjdfAL/rb0ZfSAEjGqkh3rTm2/dTsCK43Ezam8bP10dPv4vw59yQR4O5td4dV" as="fetch" type="application/wasm"></head>
+<body>
+  <div id="app"></div>
+  <noscript>Enable JavaScript to run this app.</noscript>
+</body>
+</html>
+
+
