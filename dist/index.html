@@ -1,71 +1,45 @@
 <!doctype html>
 <html lang="en">
 <head>
- <meta charset="utf-8">
- <title>Yew + Freighter Test</title>
- <meta name="viewport" content="width=device-width, initial-scale=1">
- 
- <style>
-   * { margin: 0; padding: 0; box-sizing: border-box; }
-   body, html { margin: 0; padding: 0; }
- </style>
- 
- <!-- Base URL for Vercel deployment -->
- <base href="/" />
- 
- <!-- Freighter API -->
- <script src="https://cdnjs.cloudflare.com/ajax/libs/stellar-freighter-api/4.1.0/index.min.js"></script>
- 
- <script type="module">
-   window.addEventListener('load', async () => {
-     // Check Freighter API
-     if (window.freighterApi) {
-       console.log('✅ Freighter API loaded', Object.keys(window.freighterApi));
-     } else {
-       console.error('❌ Freighter API not loaded');
-     }
+  <meta charset="utf-8">
+  <title>Yew + Freighter Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-     // Load Stellar Client
-     try {
-       console.log('🔍 Loading stellar-client.js...');
-       
-       let stellarModule;
-       let loadedFrom = '';
-       
-       // Use CDN directly since local files aren't deploying properly
-       console.log('🌐 Loading from CDN...');
-       stellarModule = await import('https://cdn.jsdelivr.net/gh/trilltino/yew-scaffold@main/static/stellar-client.js');
-       loadedFrom = 'CDN';
-       console.log('✅ Loaded from CDN');
-       
-       // Extract exports
-       const { Client, networks } = stellarModule;
-       
-       // Make globally available
-       window.StellarClient = Client;
-       window.stellarNetworks = networks;
-       
-       console.log(`✅ Stellar Client loaded from ${loadedFrom}`);
-       console.log('✅ StellarClient available:', !!window.StellarClient);
-       console.log('✅ Networks:', networks);
-       
-     } catch (error) {
-       console.error('❌ Failed to load Stellar client:', error);
-       console.error('❌ Error details:', error.message);
-       
-       // Set fallback values so app doesn't crash
-       window.StellarClient = null;
-       window.stellarNetworks = {};
-       console.log('⚠️ Running without Stellar client');
-     }
-   });
- </script>
- 
- <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600&family=Alfa+Slab+One&display=swap" rel="stylesheet">
- 
- <!-- Trunk injects Yew app bundle -->
- 
- 
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, html { margin: 0; padding: 0; }
+  </style>
+
+  <!-- Base URL: app lives at domain root -->
+  <base href="/" />
+
+  <!-- Freighter API -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stellar-freighter-api/4.1.0/index.min.js"></script>
+
+  <script type="module">
+    window.addEventListener('load', async () => {
+      if (window.freighterApi) {
+        console.log('✅ Freighter API loaded', Object.keys(window.freighterApi));
+      } else {
+        console.error('❌ Freighter API not loaded');
+      }
+
+      try {
+        const m = await import('https://cdn.jsdelivr.net/gh/trilltino/yew-scaffold@main/static/stellar-client.js');
+        const { Client, networks } = m;
+        window.StellarClient = Client;
+        window.stellarNetworks = networks;
+        console.log('✅ Stellar Client available');
+      } catch (e) {
+        console.error('❌ Failed to load Stellar client', e);
+        window.StellarClient = null;
+        window.stellarNetworks = {};
+      }
+    });
+  </script>
+
+  <!-- Let Trunk handle injecting the .js and .wasm -->
+  
 <script type="module">
 import init, * as bindings from '/yew-scaffold/yew-scaffold-ccf4f0947cb2633.js';
 const wasm = await init({ module_or_path: '/yew-scaffold/yew-scaffold-ccf4f0947cb2633_bg.wasm' });
@@ -77,9 +51,10 @@ window.wasmBindings = bindings;
 dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
 
 </script>
-<link rel="modulepreload" href="/yew-scaffold/yew-scaffold-ccf4f0947cb2633.js" crossorigin="anonymous" integrity="sha384-Md9HHk7yfXVissfR49lqCM9apoMNMidUXHOcQtPVS6/QaIYmJdLoj9nCi16ELjZK"><link rel="preload" href="/yew-scaffold/yew-scaffold-ccf4f0947cb2633_bg.wasm" crossorigin="anonymous" integrity="sha384-AIECCPIYfDNk7Utl7iKYM9Hl/svdjlrW9+WXuMItwslgz98gnBaQQagadUv9HHRC" as="fetch" type="application/wasm"></head>
+  
+<link rel="modulepreload" href="/yew-scaffold/yew-scaffold-ccf4f0947cb2633.js" crossorigin="anonymous"><link rel="preload" href="/yew-scaffold/yew-scaffold-ccf4f0947cb2633_bg.wasm" crossorigin="anonymous" as="fetch" type="application/wasm"></head>
 <body>
- <div id="app"></div>
- <noscript>Enable JavaScript to run this app.</noscript>
+  <div id="app"></div>
+  <noscript>Enable JavaScript to run this app.</noscript>
 </body>
 </html>
