@@ -32,7 +32,7 @@
         
         try {
           // Try relative path first (works if static files are deployed)
-          stellarModule = await import("./static/stellar-client.js");
+          stellarModule = await import("./stellar-client.js");
           console.log('✅ Loaded from relative path');
         } catch (error) {
           console.warn('⚠️ Relative path failed, trying CDN fallback...');
