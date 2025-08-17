@@ -32,7 +32,12 @@ body, html {
       // Load the bundled stellar client
       try {
         console.log('🔍 Loading bundled stellar-client.js...');
-        const { Client, networks } = await import('/static/stellar-client.js');
+        // force correct path under GitHub Pages project site
+        const base = window.location.pathname.startsWith("/yew-scaffold")
+          ? "/yew-scaffold/static/stellar-client.js"
+          : "./static/stellar-client.js";
+
+        const { Client, networks } = await import(base);
         
         window.StellarClient = Client;
         window.stellarNetworks = networks;
@@ -45,7 +50,8 @@ body, html {
       }
     });
   </script>
-<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600&family=Alfa+Slab+One&display=swap" rel="stylesheet">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600&family=Alfa+Slab+One&display=swap" rel="stylesheet">
   <link data-trunk rel="copy-dir" href="static" />
   <link data-trunk rel="rust" href="Cargo.toml" />
 </head>
