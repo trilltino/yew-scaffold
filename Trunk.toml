@@ -1,8 +1,8 @@
-public_url = "/yew-scaffold/"
-
 
 [build]
 target = "index.html"
+public_url = "/yew-scaffold/"
+wasm_opt = false
 
 [serve]
 address = "127.0.0.1"
@@ -20,5 +20,5 @@ dest = "contract-bindings"
 
 
 [[copy]]
-source = "hello.js"
-dest = "hello.js"
+source = "static"
+dest = "static
