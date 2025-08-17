@@ -7,22 +7,15 @@
   ],
   "routes": [
     {
-      "src": "/yew-scaffold/(.*\\.(wasm|js|css|png|jpg|jpeg|gif|svg|ico))",
-      "dest": "/dist/$1",
-      "headers": {
-        "Cache-Control": "public, max-age=31536000, immutable"
-      }
-    },
-    {
-      "src": "/yew-scaffold/(.*\\.wasm)",
+      "src": "/(.*\\.wasm)",
       "dest": "/dist/$1",
       "headers": {
         "Content-Type": "application/wasm"
       }
     },
     {
-      "src": "/yew-scaffold/(.*)",
-      "dest": "/dist/index.html"
+      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico))",
+      "dest": "/dist/$1"
     },
     {
       "src": "/(.*)",

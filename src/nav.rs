@@ -1,5 +1,4 @@
 use yew::prelude::*;
-use yew_router::prelude::*;
 use wasm_bindgen_futures::spawn_local;
 use web_sys::console;
 use wasm_bindgen::JsValue;
