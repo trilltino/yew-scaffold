@@ -41,10 +41,8 @@ pub fn nav(props: &NavProps) -> Html {
             spawn_local(async move {
                 match connect_wallet().await {
                     Ok(address) => {
-                        console::log_1(&JsValue::from_str(&format!("Connected: {}", address)));
                         wallet_address.set(format!("{}...{}", &address[..4], &address[address.len()-4..]));
                         wallet_status.set("connected".to_string());
-                        wallet_result.set(format!("Wallet connected: {}", address));
                     }
                     Err(FreighterError::UserRejected) => {
                         wallet_address.set("User rejected".to_string());
@@ -58,11 +56,8 @@ pub fn nav(props: &NavProps) -> Html {
                         wallet_result.set("Freighter wallet extension not found. Install from https://freighter.app/".to_string());
                     }
                     Err(e) => {
-                        let error_msg = format!("Error: {}", e);
-                        console::log_1(&JsValue::from_str(&error_msg));
                         wallet_address.set("Connection failed".to_string());
                         wallet_status.set("error".to_string());
-                        wallet_result.set(format!("Wallet connection failed: {}", error_msg));
                     }
                 }
             });
