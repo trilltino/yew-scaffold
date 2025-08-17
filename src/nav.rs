@@ -17,7 +17,7 @@ pub fn nav(props: &NavProps) -> Html {
     let wallet_address = use_state(|| "Not connected".to_string());
     let wallet_status = use_state(|| "disconnected".to_string()); // For styling different states
 
-    // Freighter wallet button
+
     let connect_wallet_click = {
         let wallet_address = wallet_address.clone();
         let wallet_status = wallet_status.clone();
@@ -34,7 +34,6 @@ pub fn nav(props: &NavProps) -> Html {
                 return;
             }
             
-            // Show connecting state
             wallet_address.set("Connecting...".to_string());
             wallet_status.set("connecting".to_string());
             wallet_result.set("Connecting to Freighter wallet...".to_string());
@@ -70,7 +69,6 @@ pub fn nav(props: &NavProps) -> Html {
         })
     };
 
-    // Stellar contract button - now updates the prop
     let stellar_contract_click = {
         let contract_result = props.contract_result.clone();
         Callback::from(move |_| {
@@ -85,7 +83,6 @@ pub fn nav(props: &NavProps) -> Html {
         })
     };
 
-    // Dynamic styling based on wallet status
     let wallet_text_color = match wallet_status.as_str() {
         "connected" => "#4CAF50",
         "connecting" => "#FF9800", 

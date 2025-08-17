@@ -68,7 +68,7 @@ pub async fn connect_wallet() -> Result<String, FreighterError> {
    
    let api = get_freighter_api()?;
    
-   // Request access first - this shows the popup
+
    web_sys::console::log_1(&JsValue::from_str("📝 Requesting access..."));
    let request_access_method = Reflect::get(&api, &JsValue::from_str("requestAccess"))?;
    if request_access_method.is_function() {
@@ -85,7 +85,7 @@ pub async fn connect_wallet() -> Result<String, FreighterError> {
        }
    }
    
-   // Get the public key - try different method names
+
    web_sys::console::log_1(&JsValue::from_str("🔑 Getting public key..."));
    
    let method_names = ["getPublicKey", "getUserInfo", "getAddress"];
@@ -110,12 +110,12 @@ pub async fn connect_wallet() -> Result<String, FreighterError> {
    
 match JsFuture::from(promise).await {
     Ok(result) => {
-        // Check if it's a string (direct address)
+
         if let Some(public_key) = result.as_string() {
             web_sys::console::log_1(&JsValue::from_str(&format!("🎉 Got key: {}", public_key)));
             Ok(public_key)
         } 
-        // Check if it's an object with address property
+
         else if let Ok(obj) = result.clone().dyn_into::<js_sys::Object>() {
             if let Ok(address) = Reflect::get(&obj, &JsValue::from_str("address")) {
                 if let Some(address_str) = address.as_string() {
