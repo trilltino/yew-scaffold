@@ -1,4 +1,3 @@
-
 {
   "buildCommand": "trunk build --release --no-sri",
   "outputDirectory": "dist",
@@ -20,19 +19,6 @@
           "value": "application/wasm"
         }
       ]
-    }
-  ],
-  "routes": [
-    {
-      "src": "/yew-scaffold/(.*\\.(js|wasm|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot))",
-      "dest": "/yew-scaffold/$1",
-      "headers": {
-        "Content-Type": "application/javascript"
-      }
-    },
-    {
-      "src": "/yew-scaffold/(.*)",
-      "dest": "/yew-scaffold/index.html"
     }
   ]
 }
