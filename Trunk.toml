@@ -1,11 +1,13 @@
 [build]
 target = "index.html"
 public_url = "/yew-scaffold/"
-wasm_opt = false   # skip wasm-opt so it doesn’t crash on Windows
+wasm_opt = false
 
 [serve]
+address = "127.0.0.1"
+port = 8080
 open = false
-spa = false        # we’ll handle SPA fallback manually (404.html)
+spa = true  # enable SPA fallback for Yew Router
 
 [[copy]]
 source = "static"
