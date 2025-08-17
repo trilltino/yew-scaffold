@@ -6,7 +6,7 @@
       "source": "/yew-scaffold/**/*.js",
       "headers": [
         {
-          "key": "Content-Type",
+          "key": "Content-Type",s
           "value": "application/javascript"
         }
       ]
