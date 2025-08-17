@@ -3,7 +3,7 @@
   "outputDirectory": "dist",
   "headers": [
     {
-      "source": "/yew-scaffold/**/*.js",
+      "source": "/yew-scaffold/(.*)\\.js",
       "headers": [
         {
           "key": "Content-Type",
@@ -12,7 +12,7 @@
       ]
     },
     {
-      "source": "/yew-scaffold/**/*.wasm",
+      "source": "/yew-scaffold/(.*)\\.wasm",
       "headers": [
         {
           "key": "Content-Type",
