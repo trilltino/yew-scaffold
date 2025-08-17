@@ -1,13 +1,37 @@
 {
+  "buildCommand": "trunk build --release --no-sri",
   "outputDirectory": "dist",
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }],
   "headers": [
     {
-      "source": "/:path*.wasm",
+      "source": "/yew-scaffold/**/*.js",
       "headers": [
-        { "key": "Content-Type", "value": "application/wasm" },
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Content-Type",
+          "value": "application/javascript"
+        }
       ]
+    },
+    {
+      "source": "/yew-scaffold/**/*.wasm",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/wasm"
+        }
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "src": "/yew-scaffold/(.*\\.(js|wasm|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot))",
+      "dest": "/yew-scaffold/$1",
+      "headers": {
+        "Content-Type": "application/javascript"
+      }
+    },
+    {
+      "src": "/yew-scaffold/(.*)",
+      "dest": "/yew-scaffold/index.html"
     }
   ]
 }
