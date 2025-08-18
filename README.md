@@ -1,14 +1,12 @@
 <img width="1918" height="990" alt="Screenshot 2025-08-17 123131" src="https://github.com/user-attachments/assets/a5c65996-605b-42f2-b33c-3896d10fdc6e" />
 
 Yew Template for Soroban dApps
-A Yew SPA wired directly to Soroban smart contracts
 Built with Rust, compiled to WebAssembly
-Freighter wallet integration
-Soroban Contract Frontend 
 
-This template is a stepping stone to building an entire decentralized apps in Rust
+- Freighter wallet integration
+- Soroban Contract Frontend caling a Deployed contracts functions
 
-What Next?
+Whats Next?
 
 Axum as backend
 fast , async-native, and composable  handles API routes, auth, and contract indexing
@@ -24,10 +22,8 @@ Opening the ecosystem to  full-stack Rust developers who can build , secure, sca
 Similarity to Scaffold Stellar
 
 This project plays a role for Yew that Scaffold Stellar does for React/Next.js:
-Scaffold Stellar provides a React-based starter with contract integration and wallet support.
-This Yew template provides the same foundation, but for a Rust-only frontend workflow.
 Both aim to reduce boilerplate, accelerate prototyping, and standardize dApp structure.
-Where Scaffold Stellar helps JS developers onboard to Soroban, this template helps Rust developers stay in their ecosystem without switching stacks.
+ Scaffold Stellar helps JS developers onboard to Soroban, this template helps Rust developers stay in their ecosystem without switching stacks.
 
 
 # Dev prerequisites
