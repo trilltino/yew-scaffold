@@ -28,6 +28,7 @@ Both aim to reduce boilerplate, accelerate prototyping, and standardize dApp str
 
 # Dev prerequisites
 Install Rust
+Install Frieghter browser Ext
 
 rustup target add wasm32-unknown-unknown
 
