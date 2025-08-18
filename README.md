@@ -41,6 +41,6 @@ cargo build
 trunk serve
 
 # To Do
-Tutorial
+Error Handliing/Tutorial
 
 
