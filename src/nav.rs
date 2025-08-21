@@ -2,7 +2,7 @@ use yew::prelude::*;
 use wasm_bindgen_futures::spawn_local;
 use web_sys::console;
 use wasm_bindgen::JsValue;
-use crate::freighter::{is_freighter_available, connect_wallet, FreighterError};
+use crate::freighter::{is_freighter_available, connect_wallet, get_public_key, FreighterError};
 use crate::helloworld_bindings::call_hello_contract;
 
 #[derive(Properties, PartialEq, Clone)]
@@ -15,8 +15,36 @@ pub struct NavProps {
 pub fn nav(props: &NavProps) -> Html {
     let nav_class = "display:flex;justify-content:space-between;align-items:center;background-color:#3d2f1f;font-family:'Fira Sans',Helvetica,Arial,sans-serif;margin:0;padding:10px 20px;";
     let wallet_address = use_state(|| "Not connected".to_string());
-    let wallet_status = use_state(|| "disconnected".to_string()); // For styling different states
+    let wallet_status = use_state(|| "disconnected".to_string());
 
+    // Check connection status on component mount
+    {
+        let wallet_address = wallet_address.clone();
+        let wallet_status = wallet_status.clone();
+        let wallet_result = props.wallet_result.clone();
+        
+        use_effect_with((), move |_| {
+            spawn_local(async move {
+                if is_freighter_available() {
+                    // Try to get the current public key to check if already connected
+                    match get_public_key().await {
+                        Ok(address) => {
+                            wallet_address.set(format!("{}...{}", &address[..4], &address[address.len()-4..]));
+                            wallet_status.set("connected".to_string());
+                            wallet_result.set(format!("Connected to Freighter: {}", address));
+                        }
+                        Err(_) => {
+                            // Not connected yet, keep default state
+                            wallet_result.set("Freighter available but not connected".to_string());
+                        }
+                    }
+                } else {
+                    wallet_result.set("Freighter wallet extension not found".to_string());
+                }
+            });
+            || ()
+        });
+    }
 
     let connect_wallet_click = {
         let wallet_address = wallet_address.clone();
@@ -26,6 +54,11 @@ pub fn nav(props: &NavProps) -> Html {
             let wallet_address = wallet_address.clone();
             let wallet_status = wallet_status.clone();
             let wallet_result = wallet_result.clone();
+            
+            // Don't allow clicking if already connected or connecting
+            if wallet_status.as_str() == "connected" || wallet_status.as_str() == "connecting" {
+                return;
+            }
             
             if !is_freighter_available() {
                 wallet_address.set("Freighter not installed".to_string());
@@ -43,6 +76,8 @@ pub fn nav(props: &NavProps) -> Html {
                     Ok(address) => {
                         wallet_address.set(format!("{}...{}", &address[..4], &address[address.len()-4..]));
                         wallet_status.set("connected".to_string());
+                        wallet_result.set(format!("Successfully connected to Freighter: {}", address));
+                        console::log_1(&JsValue::from_str(&format!("Connected to wallet: {}", address)));
                     }
                     Err(FreighterError::UserRejected) => {
                         wallet_address.set("User rejected".to_string());
@@ -58,6 +93,8 @@ pub fn nav(props: &NavProps) -> Html {
                     Err(e) => {
                         wallet_address.set("Connection failed".to_string());
                         wallet_status.set("error".to_string());
+                        wallet_result.set(format!("Connection failed: {:?}", e));
+                        console::log_1(&JsValue::from_str(&format!("Wallet connection error: {:?}", e)));
                     }
                 }
             });
@@ -92,37 +129,34 @@ pub fn nav(props: &NavProps) -> Html {
     };
 
     let button_style = match wallet_status.as_str() {
-        "connected" => "padding:8px 16px;background:#4CAF50;color:white;border:none;border-radius:4px;cursor:pointer;font-family:'Fira Sans',Helvetica,Arial,sans-serif;",
+        "connected" => "padding:8px 16px;background:#4CAF50;color:white;border:none;border-radius:4px;cursor:default;font-family:'Fira Sans',Helvetica,Arial,sans-serif;",
         "connecting" => "padding:8px 16px;background:#FF9800;color:white;border:none;border-radius:4px;cursor:not-allowed;font-family:'Fira Sans',Helvetica,Arial,sans-serif;",
+        "error" => "padding:8px 16px;background:#f44336;color:white;border:none;border-radius:4px;cursor:pointer;font-family:'Fira Sans',Helvetica,Arial,sans-serif;",
         _ => "padding:8px 16px;background:#4CAF50;color:white;border:none;border-radius:4px;cursor:pointer;font-family:'Fira Sans',Helvetica,Arial,sans-serif;",
     };
 
     html! {
         <nav style={nav_class}>
-            <div>
-                <img src="/static/logo.png" alt="Logo" height="36"/>
+            <div style="display:flex;align-items:center;">
+                <h1 style="color:#f5f3f0;margin:0;font-size:24px;">{"Stellar dApp"}</h1>
             </div>
-            <div style={"display:flex;gap:15px;align-items:center;"}>
-                <div style={"display:flex;align-items:center;gap:10px;"}>
-                    <button
-                        onclick={connect_wallet_click}
-                        disabled={*wallet_status == "connecting"}
-                        style={button_style}
-                    >
-                        {button_text}
-                    </button>
-                    <span style={format!("font-size:12px;max-width:150px;overflow:hidden;text-overflow:ellipsis;font-family:'Fira Sans',Helvetica,Arial,sans-serif;color:{};", wallet_text_color)}>
-                        {(*wallet_address).clone()}
-                    </span>
-                </div>
-                <div style={"display:flex;align-items:center;gap:10px;"}>
-                    <button
-                        onclick={stellar_contract_click}
-                        style={"padding:8px 16px;background:#9C27B0;color:white;border:none;border-radius:4px;cursor:pointer;font-family:'Fira Sans',Helvetica,Arial,sans-serif;"}
-                    >
-                        {"Call Contract"}
-                    </button>
-                </div>
+            <div style="display:flex;align-items:center;gap:15px;">
+                <span style={format!("color:{};font-size:14px;", wallet_text_color)}>
+                    {wallet_address.as_str()}
+                </span>
+                <button 
+                    style={button_style}
+                    onclick={connect_wallet_click}
+                    disabled={wallet_status.as_str() == "connecting"}
+                >
+                    {button_text}
+                </button>
+                <button 
+                    style="padding:8px 16px;background:#2196F3;color:white;border:none;border-radius:4px;cursor:pointer;font-family:'Fira Sans',Helvetica,Arial,sans-serif;"
+                    onclick={stellar_contract_click}
+                >
+                    {"Call Contract"}
+                </button>
             </div>
         </nav>
     }

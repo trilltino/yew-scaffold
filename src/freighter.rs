@@ -72,6 +72,7 @@ pub async fn connect_wallet() -> Result<String, FreighterError> {
    web_sys::console::log_1(&JsValue::from_str("📝 Requesting access..."));
    let request_access_method = Reflect::get(&api, &JsValue::from_str("requestAccess"))?;
    if request_access_method.is_function() {
+       
        let function = request_access_method.dyn_into::<Function>()?;
        let promise = function.call0(&api)?;
        let promise = promise.dyn_into::<Promise>()?;
@@ -140,3 +141,23 @@ match JsFuture::from(promise).await {
         Err(FreighterError::from(e))
     }
 }}
+
+#[wasm_bindgen]
+extern "C" {
+    #[wasm_bindgen(js_namespace = ["window", "freighterApi"])]
+    fn getPublicKey() -> js_sys::Promise;
+}
+
+pub async fn get_public_key() -> Result<String, FreighterError> {
+    let promise = getPublicKey();
+    let result = wasm_bindgen_futures::JsFuture::from(promise).await;
+    
+    match result {
+        Ok(value) => {
+            let public_key = value.as_string()
+                .ok_or(FreighterError::FreighterExtNotFound)?;
+            Ok(public_key)
+        }
+        Err(_) => Err(FreighterError::UserRejected)
+    }
+}
