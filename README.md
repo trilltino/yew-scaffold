@@ -32,7 +32,7 @@ pub struct TokenBalance {
 ### Wasm - Bindgen
 The crate allows for JSValues to be handled, "freighterApi" is called in index.html
 ```rust
-// fn get_freighter_api() -> Result<JsValue, FreighterError> {
+fn get_freighter_api() -> Result<JsValue, FreighterError> {
     let window = window().ok_or(FreighterError::NoWindow)?;
     let api = Reflect::get(window.as_ref(), &JsValue::from_str("freighterApi"))?;
     if api.is_undefined() || api.is_null() {
@@ -40,24 +40,25 @@ The crate allows for JSValues to be handled, "freighterApi" is called in index.h
     }
     Ok(api)
 }
-}
-
-
-
-### Performance Characteristics
-- **Zero-cost abstractions**: Rust's compile-time optimizations carry through to WASM
 
 
 ## Planned Architecture: Full-Stack Rust
 
+
 ```
+
+
 ┌─────────────┐    ┌──────────────┐    ┌─────────────────┐
 │  Yew (WASM) │────│ Axum Backend │────│ Soroban Network │
 │   Frontend  │    │   API/Auth   │    │   Contracts     │
 └─────────────┘    └──────────────┘    └─────────────────┘
         │                   │                     │
         └───────── Shared Rust Types ─────────────┘
+
+
 ```
+
+
 
 ### Axum Integration (Roadmap)
 - **Async-first**: Built on Tokio for optimal I/O performance
@@ -113,8 +114,5 @@ This project aims to establish patterns and best practices for full-stack Rust d
 - WASM bundle optimization techniques
 - Production deployment configurations
 
----
-
-**Goal**: Enable Rust developers to build secure, performant dApps without context-switching between languages or sacrificing type safety at any layer of the st
 
 
