@@ -17,18 +17,6 @@ This template demonstrates a **zero-JavaScript** approach to dApp development, l
 ### Type-Safe Contract Integration
 Unlike traditional dApp architectures that rely on runtime type checking and JSON serialization, this template uses Rust's ownership model and type system to guarantee contract call safety at compile time.
 
-### Shared Domain Models
-The shared crate pattern eliminates serialization overhead and runtime type errors common in polyglot stacks:
-
-```rust
-// Shared types across all layers
-#[derive(Serialize, Deserialize, Clone)]
-pub struct TokenBalance {
-    pub address: String,
-    pub amount: i128,
-}
-```
-
 ### Wasm - Bindgen
 The crate allows for JSValues to be handled, "freighterApi" is called in index.html
 ```rust
@@ -56,7 +44,7 @@ fn get_freighter_api() -> Result<JsValue, FreighterError> {
         └───────── Shared Rust Types ─────────────┘
 
 
-```
+
 
 
 
@@ -66,9 +54,9 @@ fn get_freighter_api() -> Result<JsValue, FreighterError> {
 - **Contract indexing**: Efficient event parsing and state aggregation
 - **Authentication**: JWT/session management with compile-time route protection
 
-
 ### Prerequisites
-```bash
+```
+bash
 # Rust toolchain
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
@@ -78,7 +66,6 @@ cargo install trunk wasm-bindgen-cli
 
 # Freighter wallet (browser extension)
 # Install from Chrome Web Store or Firefox Add-ons
-```
 
 ### Quick Start
 ```bash
@@ -106,7 +93,7 @@ trunk build --release
 
 ## Contributing
 
-This project aims to establish patterns and best practices for full-stack Rust dApp development. Contributions focusing on developer experience, type safety, and performance optimizations are particularly welcome.
+This project aims to establish patterns and best practices for full-stack Rust dApp development. Contributions focusing on developer experience, type safety, and performance optimizations are  welcome.
 
 ### Areas of Interest
 - Advanced error handling patterns
