@@ -2,7 +2,8 @@ use yew::prelude::*;
 use yew_router::prelude::*;
 mod freighter;
 mod helloworld_bindings;
-mod nav; 
+use nav::Nav; 
+mod nav;
 mod wallet;// new: centralize wallet state
 use wallet::use_wallet;
 use wallet::WalletCtx;
