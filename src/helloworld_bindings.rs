@@ -1,7 +1,5 @@
 use wasm_bindgen::prelude::*;
-use wasm_bindgen_futures::spawn_local;
-use yew::prelude::*;
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 
 #[wasm_bindgen]
 extern "C" {
@@ -31,34 +29,29 @@ struct HelloParams {
 }
 
 pub async fn call_hello_contract() -> Result<String, JsValue> {
+    const CONTRACT_ID: &str = "CAJHY2JSOGE7JMTBFZ4H3QL5GK2ZGPJBGII7W5GZ5LT4HGTAVP5IVDYE";
+    const TO_ADDRESS: &str = "GDAT5HWTGIU4TSSZ4752OUC4SABDLTLZFRPZUJ3D6LKBNEPA7V2CIG54";
+    const NETWORK: &str = "Test SDF Network ; September 2015";
+    const RPC_URL: &str = "https://soroban-testnet.stellar.org";
+
     let options = ClientOptions {
-        contract_id: "CAJHY2JSOGE7JMTBFZ4H3QL5GK2ZGPJBGII7W5GZ5LT4HGTAVP5IVDYE".to_string(),
-        network_passphrase: "Test SDF Network ; September 2015".to_string(),
-        rpc_url: "https://soroban-testnet.stellar.org".to_string(),
+        contract_id: CONTRACT_ID.to_string(),
+        network_passphrase: NETWORK.to_string(),
+        rpc_url: RPC_URL.to_string(),
     };
+
+    let client = StellarClient::new(&serde_wasm_bindgen::to_value(&options)?);
+    let params = HelloParams { to: TO_ADDRESS.to_string() };
     
-    let options_js = serde_wasm_bindgen::to_value(&options)?;
-    let client = StellarClient::new(&options_js);
+    let assembled_tx = wasm_bindgen_futures::JsFuture::from(client.hello(&serde_wasm_bindgen::to_value(&params)?)).await?;
+    web_sys::console::log_2(&"AssembledTransaction:".into(), &assembled_tx);
     
-    let params = HelloParams {
-        to: "GDAT5HWTGIU4TSSZ4752OUC4SABDLTLZFRPZUJ3D6LKBNEPA7V2CIG54".to_string(),
-    };
-    let params_js = serde_wasm_bindgen::to_value(&params)?;
-    
-    let promise = client.hello(&params_js);
-    let assembled_tx = wasm_bindgen_futures::JsFuture::from(promise).await?;
-    
-    web_sys::console::log_1(&JsValue::from_str("📦 AssembledTransaction:"));
-    web_sys::console::log_1(&assembled_tx);
-    
-    let result_field = js_sys::Reflect::get(&assembled_tx, &JsValue::from_str("result"))?;
-    
-    web_sys::console::log_1(&JsValue::from_str("📦 Contract result:"));
-    web_sys::console::log_1(&result_field);
-    
+
+
+    let result = js_sys::Reflect::get(&assembled_tx, &"result".into())?;
+    web_sys::console::log_2(&" Contract result:".into(), &result);
     Ok(format!("Contract result: {}", 
-        result_field.as_string()
-            .unwrap_or_else(|| format!("{:?}", result_field))
+        result.as_string().unwrap_or_else(|| format!("{:?}", result))
     ))
 }
 
