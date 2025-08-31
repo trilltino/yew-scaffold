@@ -1,11 +1,9 @@
 use yew::prelude::*;
 use yew_router::prelude::*;
 
-
-
-mod nav;
 mod freighter;
 mod helloworld_bindings;
+mod nav;
 
 use nav::Nav;
 
@@ -21,14 +19,14 @@ fn app() -> Html {
             <h1 style={"font-family: 'Alfa Slab One', serif;"}>{ "Welcome to your app!" }</h1>
             <p>{ "This is a basic template to get your dapp started with the Stellar Design System and Soroban contracts. You can customize it further by adding your own contracts, components, and styles." }</p>
             <h2 style={"font-family: 'Alfa Slab One', serif;"}>{ "Contract Result" }</h2>
-            
-            <textarea 
+
+            <textarea
                 style={"width: 100%; height: 100px; padding: 10px; font-family: 'Fira Sans', Helvetica, Arial, sans-serif; border: 1px solid #5c4a37; border-radius: 4px; background-color: white; resize: vertical;"}
                 readonly=true
                 value={format!("{}\n{}", *contract_result, *wallet_result)}
                 placeholder="Contract results will appear here..."
             />
-            
+
             <h2 style={"font-family: 'Alfa Slab One', serif;"}>{ "Developing your contracts" }</h2>
             <p>{ "Your contracts are located in the contracts/ directory, and you can modify them to suit your needs." }</p>
         </div>

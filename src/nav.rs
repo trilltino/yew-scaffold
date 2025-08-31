@@ -55,8 +55,7 @@ pub fn nav(props: &NavProps) -> Html {
             let wallet_address = wallet_address.clone();
             let wallet_status = wallet_status.clone();
             let wallet_result = wallet_result.clone();
-            
-            // Don't allow clicking if already connected or connecting
+        
             if wallet_status.as_str() == "connected" || wallet_status.as_str() == "connecting" {
                 return;
             }
@@ -77,8 +76,8 @@ pub fn nav(props: &NavProps) -> Html {
                     Ok(address) => {
                         wallet_address.set(format!("{}...{}", &address[..4], &address[address.len()-4..]));
                         wallet_status.set("connected".to_string());
-                        wallet_result.set(format!("Successfully connected to Freighter: {}", address));
-                        console::log_1(&JsValue::from_str(&format!("Connected to wallet: {}", address)));
+                        wallet_result.set(format!("Successfully connected to Freighter: {address}"));
+                        console::log_1(&JsValue::from_str(address.as_str()));
                     }
                     Err(FreighterError::UserRejected) => {
                         wallet_address.set("User rejected".to_string());
@@ -94,8 +93,8 @@ pub fn nav(props: &NavProps) -> Html {
                     Err(e) => {
                         wallet_address.set("Connection failed".to_string());
                         wallet_status.set("error".to_string());
-                        wallet_result.set(format!("Connection failed: {:?}", e));
-                        console::log_1(&JsValue::from_str(&format!("Wallet connection error: {:?}", e)));
+                        wallet_result.set(format!("Connection failed: {e:?}"));
+                        console::log_1(&JsValue::from_str(&format!("{e:?}")));
                     }
                 }
             });
