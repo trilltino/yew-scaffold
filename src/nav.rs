@@ -10,11 +10,17 @@ use crate::helloworld_bindings::call_hello_contract;
 pub struct NavProps {
     pub contract_result: UseStateHandle<String>,
     pub wallet_result: UseStateHandle<String>,
+    pub is_dark_mode: UseStateHandle<bool>,
+    pub toggle_theme: Callback<()>,
 }
 
 #[function_component(Nav)]
 pub fn nav(props: &NavProps) -> Html {
-    let nav_class = "display:flex;justify-content:space-between;align-items:center;background-color:#3d2f1f;font-family:'Fira Sans',Helvetica,Arial,sans-serif;margin:0;padding:10px 20px;";
+    let nav_class = if *props.is_dark_mode {
+        "display:flex;justify-content:space-between;align-items:center;background-color:#0a0a0a;font-family:'Plus Jakarta Sans',sans-serif;margin:0;padding:10px 20px;border-bottom:2px solid #333;"
+    } else {
+        "display:flex;justify-content:space-between;align-items:center;background-color:#3d2f1f;font-family:'Fira Sans',Helvetica,Arial,sans-serif;margin:0;padding:10px 20px;"
+    };
     let wallet_address = use_state(|| "Not connected".to_string());
     let wallet_status = use_state(|| "disconnected".to_string());
 
@@ -154,11 +160,21 @@ pub fn nav(props: &NavProps) -> Html {
                 >
                     {button_text}
                 </button>
-                <button 
+                <button
                     style="padding:8px 16px;background:#2196F3;color:white;border:none;border-radius:4px;cursor:pointer;font-family:'Fira Sans',Helvetica,Arial,sans-serif;"
                     onclick={stellar_contract_click}
                 >
                     {"Call Contract"}
+                </button>
+                <button
+                    style={if *props.is_dark_mode {
+                        "padding:8px 16px;background:#444;color:white;border:none;border-radius:4px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;margin-left:10px;"
+                    } else {
+                        "padding:8px 16px;background:#5c4a37;color:#f5f3f0;border:none;border-radius:4px;cursor:pointer;font-family:'Fira Sans',Helvetica,Arial,sans-serif;margin-left:10px;"
+                    }}
+                    onclick={props.toggle_theme.reform(|_| ())}
+                >
+                    {if *props.is_dark_mode { "☀️ Light" } else { "🌙 Dark" }}
                 </button>
             </div>
         </nav>
