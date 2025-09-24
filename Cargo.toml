@@ -2,6 +2,13 @@
 name = "yew-scaffold"
 version = "0.1.0"
 edition = "2021"
+license = "MIT"
+authors = ["Yew Soroban Template Contributors"]
+description = "A Rust-based template for building decentralized applications on Stellar using Yew and Soroban"
+repository = "https://github.com/trilltino/yew-scaffold"
+keywords = ["yew", "stellar", "soroban", "dapp", "rust", "wasm"]
+categories = ["web-programming", "wasm"]
+readme = "README.md"
 
 [dependencies]
 yew = { version = "0.21", features = ["csr"] }

@@ -141,7 +141,7 @@ pub fn nav(props: &NavProps) -> Html {
     html! {
         <nav style={nav_class}>
             <div style="display:flex;align-items:center;">
-                <h1 style="color:#f5f3f0;margin:0;font-size:24px;">{"Stellar dApp"}</h1>
+                <img src="/static/logo.png" alt="Logo" style="height:40px;width:auto;" />
             </div>
             <div style="display:flex;align-items:center;gap:15px;">
                 <span style={format!("color:{};font-size:14px;", wallet_text_color)}>
