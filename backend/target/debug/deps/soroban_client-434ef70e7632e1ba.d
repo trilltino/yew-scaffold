@@ -1,0 +1,13 @@
+C:\Users\isich\yew-scaffold\backend\target\debug\deps\soroban_client-434ef70e7632e1ba.d: C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\soroban-client-0.5.1\src\lib.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\soroban-client-0.5.1\src\error.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\soroban-client-0.5.1\src\soroban_rpc.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\soroban-client-0.5.1\src\transaction.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\soroban-client-0.5.1\src\friendbot.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\soroban-client-0.5.1\src\jsonrpc.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\soroban-client-0.5.1\src\server.rs
+
+C:\Users\isich\yew-scaffold\backend\target\debug\deps\libsoroban_client-434ef70e7632e1ba.rmeta: C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\soroban-client-0.5.1\src\lib.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\soroban-client-0.5.1\src\error.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\soroban-client-0.5.1\src\soroban_rpc.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\soroban-client-0.5.1\src\transaction.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\soroban-client-0.5.1\src\friendbot.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\soroban-client-0.5.1\src\jsonrpc.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\soroban-client-0.5.1\src\server.rs
+
+C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\soroban-client-0.5.1\src\lib.rs:
+C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\soroban-client-0.5.1\src\error.rs:
+C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\soroban-client-0.5.1\src\soroban_rpc.rs:
+C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\soroban-client-0.5.1\src\transaction.rs:
+C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\soroban-client-0.5.1\src\friendbot.rs:
+C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\soroban-client-0.5.1\src\jsonrpc.rs:
+C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\soroban-client-0.5.1\src\server.rs:
+
+# env-dep:CARGO_PKG_VERSION=0.5.1

@@ -1,0 +1,29 @@
+[package]
+name = "stellar-xdr-service"
+version = "0.1.0"
+edition = "2021"
+description = "Simplified, secure XDR generation service for Stellar Soroban contracts"
+
+[dependencies]
+# Web framework - ACTUAL latest versions
+axum = { version = "0.8.4", features = ["macros"] }
+tokio = { version = "1.47.1", features = ["full"] }
+tower-http = { version = "0.6.6", features = ["cors"] }
+
+# Serialization - ACTUAL latest versions
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.145"
+
+# Logging - ACTUAL latest versions
+tracing = "0.1.41"
+tracing-subscriber = { version = "0.3.20", features = ["env-filter"] }
+
+# Error handling
+thiserror = "1.0.69"
+
+# Soroban client for proper XDR generation - ACTUAL latest version
+soroban-client = "0.5.1"
+
+[[bin]]
+name = "stellar-xdr-service"
+path = "src/main.rs"

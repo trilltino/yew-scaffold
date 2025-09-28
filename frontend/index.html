@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Yew + Freighter Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, html { margin: 0; padding: 0; }
+  </style>
+  
+  <base href="/" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stellar-freighter-api/4.1.0/index.min.js"></script>
+  <script>
+    // Simplified configuration - contract calls now handled by native Rust
+    window.networks = {
+      testnet: {
+        networkPassphrase: "Test SDF Network ; September 2015",
+        contractId: "CAZYXFLPF5JJFZYAOWWVJJB7FCVJPWRERJHJSYBBYAXIRKMVCTNBBKBN",
+      }
+    };
+
+    console.log('✅ Network configuration loaded');
+    console.log('🦀 Contract calls now handled by native Rust soroban-client implementation');
+
+    window.addEventListener('load', () => {
+      // Simple wallet detection
+      setTimeout(() => {
+        // Check Freighter
+        if (window.freighterApi) {
+          console.log('✅ Freighter wallet detected');
+        } else {
+          console.log('❌ Freighter wallet not detected');
+        }
+
+        // Check LOBSTR
+        if (window.lobstrSignerExtensionApi) {
+          console.log('✅ LOBSTR wallet detected');
+        } else {
+          console.log('❌ LOBSTR wallet not detected');
+        }
+      }, 1000);
+    });
+  </script>
+  <!-- Trunk tells it to build WASM app -->
+  <link data-trunk rel="rust" href="Cargo.toml" data-integrity="none">
+</head>
+<body>
+  <div id="app"></div>
+  <noscript>Enable JavaScript to run this app.</noscript>
+</body>
+</html>
+

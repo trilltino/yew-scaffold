@@ -1,0 +1,11 @@
+[build]
+release = true
+public_url = "/"
+filehash = false
+dist = "dist"
+
+[serve]
+address = "127.0.0.1"
+port = 8080
+open = false
+spa = true  # ✅ required for yew-router SPA

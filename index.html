@@ -12,28 +12,7 @@
   
   <base href="/" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/stellar-freighter-api/4.1.0/index.min.js"></script>
-
-  <script type="module">
-    window.addEventListener('load', async () => {
-      if (window.freighterApi) {
-        console.log('✅ Freighter API loaded', Object.keys(window.freighterApi));
-      } else {
-        console.error('❌ Freighter API not loaded');
-      }
-
-      try {
-        const m = await import('https://cdn.jsdelivr.net/gh/trilltino/yew-scaffold@main/static/stellar-client.js');
-        const { Client, networks } = m;
-        window.StellarClient = Client;
-        window.stellarNetworks = networks;
-        console.log('✅ Stellar Client available');
-      } catch (e) {
-        console.error('❌ Failed to load Stellar client', e);
-        window.StellarClient = null;
-        window.stellarNetworks = {};
-      }
-    });
-  </script>
+@?/
   <!-- Trunk tells it to build WASM app -->
   <link data-trunk rel="rust" href="Cargo.toml" data-integrity="none">
   <link data-trunk rel="copy-dir" href="static" />

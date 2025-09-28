@@ -1,21 +1,14 @@
 {
   "name": "yew-scaffold",
   "version": "1.0.0",
-  "main": "contract_client.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build:stellar": "esbuild stellar-client-src.ts --bundle --format=esm --outfile=static/stellar-client.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
-  "devDependencies": {
-    "esbuild": "^0.25.9",
-    "typescript": "^5.9.2"
-  },
   "dependencies": {
-    "@stellar/freighter-api": "^4.1.0",
-    "@stellar/stellar-sdk": "^14.0.0"
+    "@stellar/freighter-api": "^4.1.0"
   }
 }

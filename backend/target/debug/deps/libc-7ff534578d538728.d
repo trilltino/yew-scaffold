@@ -1,0 +1,11 @@
+C:\Users\isich\yew-scaffold\backend\target\debug\deps\libc-7ff534578d538728.d: C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\libc-0.2.176\src\lib.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\libc-0.2.176\src\macros.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\libc-0.2.176\src\new\mod.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\libc-0.2.176\src\primitives.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\libc-0.2.176\src\windows\mod.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\libc-0.2.176\src\windows\msvc\mod.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\libc-0.2.176\src\types.rs
+
+C:\Users\isich\yew-scaffold\backend\target\debug\deps\liblibc-7ff534578d538728.rmeta: C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\libc-0.2.176\src\lib.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\libc-0.2.176\src\macros.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\libc-0.2.176\src\new\mod.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\libc-0.2.176\src\primitives.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\libc-0.2.176\src\windows\mod.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\libc-0.2.176\src\windows\msvc\mod.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\libc-0.2.176\src\types.rs
+
+C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\libc-0.2.176\src\lib.rs:
+C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\libc-0.2.176\src\macros.rs:
+C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\libc-0.2.176\src\new\mod.rs:
+C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\libc-0.2.176\src\primitives.rs:
+C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\libc-0.2.176\src\windows\mod.rs:
+C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\libc-0.2.176\src\windows\msvc\mod.rs:
+C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\libc-0.2.176\src\types.rs:

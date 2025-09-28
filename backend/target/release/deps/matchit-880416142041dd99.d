@@ -1,0 +1,12 @@
+C:\Users\isich\yew-scaffold\backend\target\release\deps\matchit-880416142041dd99.d: C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\matchit-0.8.4\src\lib.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\matchit-0.8.4\src\error.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\matchit-0.8.4\src\escape.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\matchit-0.8.4\src\params.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\matchit-0.8.4\src\router.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\matchit-0.8.4\src\tree.rs
+
+C:\Users\isich\yew-scaffold\backend\target\release\deps\libmatchit-880416142041dd99.rlib: C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\matchit-0.8.4\src\lib.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\matchit-0.8.4\src\error.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\matchit-0.8.4\src\escape.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\matchit-0.8.4\src\params.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\matchit-0.8.4\src\router.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\matchit-0.8.4\src\tree.rs
+
+C:\Users\isich\yew-scaffold\backend\target\release\deps\libmatchit-880416142041dd99.rmeta: C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\matchit-0.8.4\src\lib.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\matchit-0.8.4\src\error.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\matchit-0.8.4\src\escape.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\matchit-0.8.4\src\params.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\matchit-0.8.4\src\router.rs C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\matchit-0.8.4\src\tree.rs
+
+C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\matchit-0.8.4\src\lib.rs:
+C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\matchit-0.8.4\src\error.rs:
+C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\matchit-0.8.4\src\escape.rs:
+C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\matchit-0.8.4\src\params.rs:
+C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\matchit-0.8.4\src\router.rs:
+C:\Users\isich\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\matchit-0.8.4\src\tree.rs:
