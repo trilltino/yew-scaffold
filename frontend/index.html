@@ -2,47 +2,56 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Yew + Freighter Test</title>
+  <title>Stellar Freighter dApp</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body, html { margin: 0; padding: 0; }
   </style>
-  
+
   <base href="/" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/stellar-freighter-api/4.1.0/index.min.js"></script>
+
+  <!-- Official Freighter API from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stellar-freighter-api/2.0.0/index.min.js"></script>
+
+  <!-- Freighter Detection Script -->
   <script>
-    // Simplified configuration - contract calls now handled by native Rust
-    window.networks = {
-      testnet: {
-        networkPassphrase: "Test SDF Network ; September 2015",
-        contractId: "CAZYXFLPF5JJFZYAOWWVJJB7FCVJPWRERJHJSYBBYAXIRKMVCTNBBKBN",
+    async function detectFreighter() {
+      if (typeof window.freighterApi !== 'undefined') {
+        try {
+          const result = await window.freighterApi.isConnected();
+          if (result && result.isConnected) {
+            window.freighterReady = true;
+            console.log('🚀 Freighter ready');
+            return true;
+          }
+        } catch (error) {
+          // Silent check
+        }
       }
-    };
+      return false;
+    }
 
-    console.log('✅ Network configuration loaded');
-    console.log('🦀 Contract calls now handled by native Rust soroban-client implementation');
+    let retryCount = 0;
+    async function checkFreighter() {
+      const detected = await detectFreighter();
+      if (detected || retryCount++ > 5) {
+        return;
+      }
+      setTimeout(checkFreighter, 500);
+    }
 
-    window.addEventListener('load', () => {
-      // Simple wallet detection
-      setTimeout(() => {
-        // Check Freighter
-        if (window.freighterApi) {
-          console.log('✅ Freighter wallet detected');
-        } else {
-          console.log('❌ Freighter wallet not detected');
-        }
-
-        // Check LOBSTR
-        if (window.lobstrSignerExtensionApi) {
-          console.log('✅ LOBSTR wallet detected');
-        } else {
-          console.log('❌ LOBSTR wallet not detected');
-        }
-      }, 1000);
-    });
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', checkFreighter);
+    } else {
+      setTimeout(checkFreighter, 100);
+    }
   </script>
+
+  <!-- Copy Freighter WebP asset -->
+  <link data-trunk rel="copy-file" href="src/assets/freighter.webp">
+
   <!-- Trunk tells it to build WASM app -->
   <link data-trunk rel="rust" href="Cargo.toml" data-integrity="none">
 </head>
@@ -51,4 +60,3 @@
   <noscript>Enable JavaScript to run this app.</noscript>
 </body>
 </html>
-

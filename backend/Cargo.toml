@@ -21,6 +21,9 @@ tracing-subscriber = { version = "0.3.20", features = ["env-filter"] }
 # Error handling
 thiserror = "1.0.69"
 
+# Time handling
+chrono = { version = "0.4.38", features = ["serde"] }
+
 # Soroban client for proper XDR generation - ACTUAL latest version
 soroban-client = "0.5.1"
 

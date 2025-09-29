@@ -4,7 +4,6 @@ use axum::{
     Json,
 };
 use serde::Serialize;
-use std::fmt;
 
 #[derive(Debug, thiserror::Error)]
 pub enum AppError {
@@ -22,6 +21,9 @@ pub enum AppError {
 
     #[error("XDR encoding error: {0}")]
     XdrEncoding(String),
+
+    #[error("XDR decoding error: {0}")]
+    XdrDecoding(String),
 
     #[error("Task execution error: {0}")]
     TaskExecution(String),
@@ -43,7 +45,7 @@ impl AppError {
             AppError::StellarRpc(_) | AppError::Transaction(_) | AppError::Account(_) => {
                 StatusCode::BAD_GATEWAY
             }
-            AppError::XdrEncoding(_) => StatusCode::UNPROCESSABLE_ENTITY,
+            AppError::XdrEncoding(_) | AppError::XdrDecoding(_) => StatusCode::UNPROCESSABLE_ENTITY,
         }
     }
 
@@ -54,6 +56,7 @@ impl AppError {
             AppError::Transaction(_) => "TRANSACTION_ERROR",
             AppError::Account(_) => "ACCOUNT_ERROR",
             AppError::XdrEncoding(_) => "XDR_ENCODING_ERROR",
+            AppError::XdrDecoding(_) => "XDR_DECODING_ERROR",
             AppError::TaskExecution(_) => "TASK_EXECUTION_ERROR",
             AppError::InvalidInput(_) => "INVALID_INPUT",
             AppError::Internal(_) => "INTERNAL_ERROR",
