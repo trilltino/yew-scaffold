@@ -89,6 +89,7 @@ pub async fn submit_transaction_handler(
     }
 }
 
+
 pub async fn health_handler() -> Json<HealthResponse> {
     Json(HealthResponse::healthy())
 }

@@ -7,8 +7,10 @@ use crate::wallet::{WalletType, ConnectedWallet};
 pub struct NavigationProps {
     pub connected_wallet: Option<ConnectedWallet>,
     pub is_connecting: bool,
+    pub dark_mode: bool,
     pub on_connect_wallet: Callback<WalletType>,
     pub on_disconnect_wallet: Callback<()>,
+    pub on_toggle_dark_mode: Callback<()>,
 }
 
 #[function_component(Navigation)]
@@ -27,6 +29,12 @@ pub fn navigation(props: &NavigationProps) -> Html {
                         >
                             {"About"}
                         </Link<Route>>
+                    </li>
+                    <li class="nav-dark-mode-item">
+                        <DarkModeToggle
+                            dark_mode={props.dark_mode}
+                            on_toggle={props.on_toggle_dark_mode.clone()}
+                        />
                     </li>
                     <li class="nav-wallet-item">
                         <FreighterButton
@@ -93,6 +101,36 @@ pub fn freighter_button(props: &FreighterButtonProps) -> Html {
             title={title}
             style={if button_disabled { "pointer-events: none; opacity: 0.5;" } else { "cursor: pointer;" }}
         />
+    }
+}
+
+/// Dark mode toggle button component
+#[derive(Properties, PartialEq)]
+pub struct DarkModeToggleProps {
+    pub dark_mode: bool,
+    pub on_toggle: Callback<()>,
+}
+
+#[function_component(DarkModeToggle)]
+pub fn dark_mode_toggle(props: &DarkModeToggleProps) -> Html {
+    let on_click = {
+        let on_toggle = props.on_toggle.clone();
+        Callback::from(move |_| {
+            on_toggle.emit(());
+        })
+    };
+
+    let icon = if props.dark_mode { "☀️" } else { "🌙" };
+    let title = if props.dark_mode { "Switch to light mode" } else { "Switch to dark mode" };
+
+    html! {
+        <button
+            class="dark-mode-toggle"
+            onclick={on_click}
+            title={title}
+        >
+            {icon}
+        </button>
     }
 }
 

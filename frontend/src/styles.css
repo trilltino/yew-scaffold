@@ -680,3 +680,249 @@ body {
         padding: 1.5rem;
     }
 }
+
+/* Dark Mode Toggle Button */
+.dark-mode-toggle {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    opacity: 0.8;
+}
+
+.dark-mode-toggle:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.1);
+}
+
+.nav-dark-mode-item {
+    display: flex;
+    align-items: center;
+}
+
+/* Dark Mode Styles - Applied to body element */
+body.dark-mode {
+    background: #121212 !important;
+    color: #e0e0e0 !important;
+}
+
+.dark-mode .app {
+    background: #121212 !important;
+    color: #e0e0e0 !important;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark-mode .nav {
+    background: #2d1810 !important;
+    border-bottom: 1px solid #4a2c1a !important;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark-mode .nav-link {
+    color: #e0e0e0 !important;
+}
+
+.dark-mode .nav-link:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+}
+
+.dark-mode .nav-link.active {
+    background: rgba(255, 255, 255, 0.25) !important;
+}
+
+.dark-mode .header {
+    color: #d4af87 !important;
+}
+
+.dark-mode .wallet-section,
+.dark-mode .contract-section,
+.dark-mode .result-section {
+    background: #2a2a2a !important;
+    border: 1px solid #404040 !important;
+    color: #e0e0e0 !important;
+}
+
+.dark-mode .wallet-section h2,
+.dark-mode .contract-section h2,
+.dark-mode .result-section h2 {
+    color: #d4af87 !important;
+}
+
+.dark-mode .contract-section p {
+    color: #b0b0b0 !important;
+}
+
+.dark-mode .btn-primary {
+    background: #a0522d !important;
+    border: 1px solid #8b4513 !important;
+}
+
+.dark-mode .btn-primary:hover:not(:disabled) {
+    background: #8b4513 !important;
+}
+
+.dark-mode .btn-success {
+    background: #6b5010 !important;
+    border: 1px solid #8b6914 !important;
+}
+
+.dark-mode .btn-success:hover:not(:disabled) {
+    background: #8b6914 !important;
+}
+
+.dark-mode .result-box {
+    background: #333 !important;
+    border: 1px solid #555 !important;
+    color: #e0e0e0 !important;
+}
+
+.dark-mode .footer {
+    color: #d4af87 !important;
+}
+
+.dark-mode .function-grid .function-card {
+    background: #2a2a2a !important;
+    border: 1px solid #404040 !important;
+}
+
+.dark-mode .function-card:hover {
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark-mode .function-card button:hover:not(:disabled) {
+    background: rgba(212, 175, 135, 0.1) !important;
+}
+
+.dark-mode .function-card button.selected {
+    background: rgba(212, 175, 135, 0.2) !important;
+    border-left: 4px solid #d4af87 !important;
+}
+
+.dark-mode .function-name {
+    color: #e0e0e0 !important;
+}
+
+.dark-mode .function-info {
+    background: #333 !important;
+    border-top: 1px solid #555 !important;
+}
+
+.dark-mode .function-signature {
+    background: #404040 !important;
+    color: #b0b0b0 !important;
+}
+
+.dark-mode .function-description {
+    color: #b0b0b0 !important;
+}
+
+.dark-mode .selected-function {
+    background: #2a2a2a !important;
+    border: 1px solid #404040 !important;
+}
+
+.dark-mode .selected-function h3 {
+    color: #d4af87 !important;
+}
+
+.dark-mode .selected-function p {
+    color: #b0b0b0 !important;
+}
+
+.dark-mode .btn-execute {
+    background: linear-gradient(135deg, #a0522d, #d4af87) !important;
+    box-shadow: 0 2px 4px rgba(212, 175, 135, 0.2) !important;
+}
+
+.dark-mode .btn-execute:hover:not(:disabled) {
+    background: linear-gradient(135deg, #d4af87, #a0522d) !important;
+    box-shadow: 0 4px 8px rgba(212, 175, 135, 0.3) !important;
+}
+
+.dark-mode .no-selection {
+    background: #2a2a2a !important;
+    border: 1px solid #404040 !important;
+    color: #b0b0b0 !important;
+}
+
+.dark-mode .wallet-info {
+    background: #2a2a2a !important;
+    border: 1px solid #404040 !important;
+    color: #e0e0e0 !important;
+}
+
+.dark-mode .wallet-info.warning {
+    background: #3d3520 !important;
+    border-color: #5a4d28 !important;
+    color: #e6c547 !important;
+}
+
+.dark-mode .function-dropdown {
+    background: #2a2a2a !important;
+    border: 2px solid #404040 !important;
+    color: #e0e0e0 !important;
+}
+
+.dark-mode .function-dropdown:focus {
+    border-color: #d4af87 !important;
+    box-shadow: 0 0 0 3px rgba(212, 175, 135, 0.2) !important;
+}
+
+.dark-mode .function-dropdown:disabled {
+    background: #333 !important;
+}
+
+.dark-mode .btn-select {
+    background: linear-gradient(135deg, #a0522d, #8b4513) !important;
+}
+
+.dark-mode .btn-select:hover:not(:disabled) {
+    background: linear-gradient(135deg, #8b4513, #654321) !important;
+    box-shadow: 0 4px 8px rgba(212, 175, 135, 0.3) !important;
+}
+
+.dark-mode .selected-function-info {
+    background: #1a2332 !important;
+    border: 2px solid #d4af87 !important;
+    color: #e0e0e0 !important;
+}
+
+.dark-mode .selected-function-info h3 {
+    color: #d4af87 !important;
+}
+
+.dark-mode .wallet-selector-dropdown {
+    background: #2a2a2a !important;
+    border: 1px solid #404040 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark-mode .wallet-selector-header {
+    background: #333 !important;
+    color: #d4af87 !important;
+    border-bottom: 1px solid #555 !important;
+}
+
+.dark-mode .wallet-option:hover {
+    background: #404040 !important;
+}
+
+.dark-mode .wallet-option-name {
+    color: #e0e0e0 !important;
+}
+
+.dark-mode .wallet-option-description {
+    color: #b0b0b0 !important;
+}
+
+.dark-mode .wallet-selector-empty {
+    color: #b0b0b0 !important;
+}
+
+.dark-mode .wallet-selector-empty a {
+    color: #d4af87 !important;
+}

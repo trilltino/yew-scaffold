@@ -11,6 +11,7 @@ use yew_router::prelude::*;
 use gloo_net::http::Request;
 use wasm_bindgen_futures::spawn_local;
 use serde::{Deserialize, Serialize};
+use web_sys;
 
 mod components;
 mod wallet;
@@ -54,6 +55,7 @@ struct AppState {
     result_message: String,
     is_processing: bool,
     selected_function: Option<ContractFunction>,
+    dark_mode: bool,
 }
 
 impl PartialEq for AppState {
@@ -63,6 +65,7 @@ impl PartialEq for AppState {
             && self.result_message == other.result_message
             && self.is_processing == other.is_processing
             && self.selected_function == other.selected_function
+            && self.dark_mode == other.dark_mode
     }
 }
 
@@ -74,6 +77,7 @@ impl Default for AppState {
             result_message: "Ready to connect with Freighter wallet".to_string(),
             is_processing: false,
             selected_function: None,
+            dark_mode: false,
         }
     }
 }
@@ -88,6 +92,7 @@ enum AppMessage {
     SelectFunction(ContractFunction),
     SignTransaction,
     TransactionResult(String),
+    ToggleDarkMode,
 }
 
 /// Main application component with routing
@@ -109,6 +114,31 @@ fn app() -> Html {
         })
     };
 
+    let on_toggle_dark_mode = {
+        let state = state.clone();
+        Callback::from(move |_| {
+            state.dispatch(AppMessage::ToggleDarkMode);
+        })
+    };
+
+    // Check if Freighter is available on component mount and handle dark mode body class
+    {
+        let dark_mode = state.dark_mode;
+        use_effect_with(dark_mode, move |dark_mode| {
+            let window = web_sys::window().unwrap();
+            let document = window.document().unwrap();
+            let body = document.body().unwrap();
+
+            if *dark_mode {
+                let _ = body.set_class_name("dark-mode");
+            } else {
+                let _ = body.set_class_name("");
+            }
+
+            || {}
+        });
+    }
+
     // Check if Freighter is available on component mount
     {
         use_effect_with((), move |_| {
@@ -128,8 +158,10 @@ fn app() -> Html {
                 <Navigation
                     connected_wallet={state.connected_wallet.clone()}
                     is_connecting={state.is_connecting}
+                    dark_mode={state.dark_mode}
                     on_connect_wallet={on_connect_wallet}
                     on_disconnect_wallet={on_disconnect_wallet}
+                    on_toggle_dark_mode={on_toggle_dark_mode}
                 />
                 <Switch<Route> render={switch_with_state(state.clone())} />
                 <footer class="footer">
@@ -278,6 +310,11 @@ impl Reducible for AppState {
             AppMessage::TransactionResult(result) => Self {
                 is_processing: false,
                 result_message: result,
+                ..(*self).clone()
+            }.into(),
+
+            AppMessage::ToggleDarkMode => Self {
+                dark_mode: !self.dark_mode,
                 ..(*self).clone()
             }.into(),
 
