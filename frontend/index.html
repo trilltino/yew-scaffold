@@ -23,7 +23,7 @@
           const result = await window.freighterApi.isConnected();
           if (result && result.isConnected) {
             window.freighterReady = true;
-            console.log('🚀 Freighter ready');
+            console.log('Freighter ready');
             return true;
           }
         } catch (error) {
@@ -49,8 +49,7 @@
     }
   </script>
 
-  <!-- Copy Freighter WebP asset -->
-  <link data-trunk rel="copy-file" href="src/assets/freighter.webp">
+  <!-- Freighter WebP asset removed - no longer needed -->
 
   <!-- Trunk tells it to build WASM app -->
   <link data-trunk rel="rust" href="Cargo.toml" data-integrity="none">

@@ -56,26 +56,53 @@ impl ContractFunction {
     }
 
     /// Convert to ScVal parameters for Soroban
-    pub fn to_scval_params(&self) -> Vec<ScVal> {
+    ///
+    /// Returns Result to handle conversion errors gracefully instead of panicking
+    pub fn to_scval_params(&self) -> crate::error::Result<Vec<ScVal>> {
         match self {
             ContractFunction::Hello { to } => {
-                vec![ScVal::String(to.as_bytes().to_vec().try_into().unwrap())]
+                Ok(vec![ScVal::String(
+                    to.as_bytes().to_vec().try_into()
+                        .map_err(|_| crate::error::AppError::XdrEncoding(
+                            format!("Failed to convert 'to' parameter (length: {})", to.len())
+                        ))?
+                )])
             }
             ContractFunction::HelloYew { to } => {
-                vec![ScVal::String(to.as_bytes().to_vec().try_into().unwrap())]
+                Ok(vec![ScVal::String(
+                    to.as_bytes().to_vec().try_into()
+                        .map_err(|_| crate::error::AppError::XdrEncoding(
+                            format!("Failed to convert 'to' parameter (length: {})", to.len())
+                        ))?
+                )])
             }
-            ContractFunction::Simple => vec![],
+            ContractFunction::Simple => Ok(vec![]),
             ContractFunction::TestFunc123 { param_1, param_2 } => {
-                vec![
-                    ScVal::String(param_1.as_bytes().to_vec().try_into().unwrap()),
+                Ok(vec![
+                    ScVal::String(
+                        param_1.as_bytes().to_vec().try_into()
+                            .map_err(|_| crate::error::AppError::XdrEncoding(
+                                format!("Failed to convert 'param_1' (length: {})", param_1.len())
+                            ))?
+                    ),
                     ScVal::U32(*param_2),
-                ]
+                ])
             }
             ContractFunction::X { y } => {
-                vec![ScVal::String(y.as_bytes().to_vec().try_into().unwrap())]
+                Ok(vec![ScVal::String(
+                    y.as_bytes().to_vec().try_into()
+                        .map_err(|_| crate::error::AppError::XdrEncoding(
+                            format!("Failed to convert 'y' parameter (length: {})", y.len())
+                        ))?
+                )])
             }
             ContractFunction::EdgeCaseTestYew123End { edge_input } => {
-                vec![ScVal::String(edge_input.as_bytes().to_vec().try_into().unwrap())]
+                Ok(vec![ScVal::String(
+                    edge_input.as_bytes().to_vec().try_into()
+                        .map_err(|_| crate::error::AppError::XdrEncoding(
+                            format!("Failed to convert 'edge_input' (length: {})", edge_input.len())
+                        ))?
+                )])
             }
         }
     }
@@ -95,6 +122,28 @@ impl ContractFunction {
                 edge_input: "edge_test".to_string()
             },
         ]
+    }
+
+    /// Parse function name string to ContractFunction with default parameters
+    /// Centralized logic to avoid duplication in XdrRequest and SubmitRequest
+    pub fn from_name(name: Option<&str>) -> Self {
+        match name {
+            Some("hello") => ContractFunction::Hello { to: "World".to_string() },
+            Some("hello_yew") => ContractFunction::HelloYew { to: "Yew".to_string() },
+            Some("simple") => ContractFunction::Simple,
+            Some("test_func_123") => ContractFunction::TestFunc123 {
+                param_1: "hello".to_string(),
+                param_2: 42,
+            },
+            Some("x") => ContractFunction::X { y: "test".to_string() },
+            Some("edge_case_test_yew_123_end") => ContractFunction::EdgeCaseTestYew123End {
+                edge_input: "edge_test".to_string(),
+            },
+            _ => ContractFunction::TestFunc123 {
+                param_1: "hello".to_string(),
+                param_2: 42,
+            },
+        }
     }
 }
 
@@ -125,25 +174,9 @@ impl XdrRequest {
         Ok(())
     }
 
-    /// Convert function name to ContractFunction
+    /// Convert function name to ContractFunction (delegates to centralized logic)
     pub fn get_function(&self) -> ContractFunction {
-        match self.function_name.as_deref() {
-            Some("hello") => ContractFunction::Hello { to: "World".to_string() },
-            Some("hello_yew") => ContractFunction::HelloYew { to: "Yew".to_string() },
-            Some("simple") => ContractFunction::Simple,
-            Some("test_func_123") => ContractFunction::TestFunc123 {
-                param_1: "hello".to_string(),
-                param_2: 42,
-            },
-            Some("x") => ContractFunction::X { y: "test".to_string() },
-            Some("edge_case_test_yew_123_end") => ContractFunction::EdgeCaseTestYew123End {
-                edge_input: "edge_test".to_string(),
-            },
-            _ => ContractFunction::TestFunc123 {
-                param_1: "hello".to_string(),
-                param_2: 42,
-            },
-        }
+        ContractFunction::from_name(self.function_name.as_deref())
     }
 }
 
@@ -199,25 +232,9 @@ impl SubmitRequest {
         Ok(())
     }
 
-    /// Convert function name to ContractFunction
+    /// Convert function name to ContractFunction (delegates to centralized logic)
     pub fn get_function(&self) -> ContractFunction {
-        match self.function_name.as_deref() {
-            Some("hello") => ContractFunction::Hello { to: "World".to_string() },
-            Some("hello_yew") => ContractFunction::HelloYew { to: "Yew".to_string() },
-            Some("simple") => ContractFunction::Simple,
-            Some("test_func_123") => ContractFunction::TestFunc123 {
-                param_1: "hello".to_string(),
-                param_2: 42,
-            },
-            Some("x") => ContractFunction::X { y: "test".to_string() },
-            Some("edge_case_test_yew_123_end") => ContractFunction::EdgeCaseTestYew123End {
-                edge_input: "edge_test".to_string(),
-            },
-            _ => ContractFunction::TestFunc123 {
-                param_1: "hello".to_string(),
-                param_2: 42,
-            },
-        }
+        ContractFunction::from_name(self.function_name.as_deref())
     }
 }
 

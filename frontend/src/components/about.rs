@@ -10,11 +10,11 @@ pub fn about_page() -> Html {
 
                 <h3>{"Features"}</h3>
                 <ul>
-                    <li>{"🔐 Freighter wallet integration"}</li>
-                    <li>{"📋 XDR transaction generation"}</li>
-                    <li>{"⚡ Smart contract interaction"}</li>
-                    <li>{"🌐 Stellar testnet support"}</li>
-                    <li>{"🦀 Built with Rust & WebAssembly"}</li>
+                    <li>{"Freighter wallet integration"}</li>
+                    <li>{"XDR transaction generation"}</li>
+                    <li>{"Smart contract interaction"}</li>
+                    <li>{"Stellar testnet support"}</li>
+                    <li>{"Built with Rust & WebAssembly"}</li>
                 </ul>
 
                 <h3>{"Technology Stack"}</h3>

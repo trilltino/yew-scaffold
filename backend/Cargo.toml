@@ -14,6 +14,9 @@ tower-http = { version = "0.6.6", features = ["cors"] }
 serde = { version = "1.0.228", features = ["derive"] }
 serde_json = "1.0.145"
 
+# HTTP client for custom RPC calls
+reqwest = { version = "0.11", features = ["json"] }
+
 # Logging - ACTUAL latest versions
 tracing = "0.1.41"
 tracing-subscriber = { version = "0.3.20", features = ["env-filter"] }
@@ -26,6 +29,36 @@ chrono = { version = "0.4.38", features = ["serde"] }
 
 # Soroban client for proper XDR generation - ACTUAL latest version
 soroban-client = "0.5.1"
+
+# Database
+sqlx = { version = "0.8", features = ["runtime-tokio-rustls", "postgres", "chrono", "macros"] }
+
+# Environment variables
+dotenvy = "0.15.7"
+
+# Additional dependencies for Soroban service modules
+uuid = { version = "1.11", features = ["v4", "serde"] }
+rand = "0.8"
+stellar-strkey = "0.0.9"
+hex = "0.4"
+
+# Authentication dependencies
+jsonwebtoken = { version = "10", default-features = false, features = ["rust_crypto"] }
+bcrypt = "0.17"
+tower-cookies = "0.11"
+sha2 = "0.10"
+time = "0.3"
+tower = { version = "0.5", features = ["util"] }
+
+# Shared DTOs
+shared = { path = "../shared" }
+
+[dev-dependencies]
+# Testing utilities
+http-body-util = "0.1"
+tower = { version = "0.5", features = ["util"] }
+mime = "0.3"
+futures = "0.3"
 
 [[bin]]
 name = "stellar-xdr-service"

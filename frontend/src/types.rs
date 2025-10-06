@@ -1,7 +1,23 @@
 /// Frontend types that mirror the backend ContractFunction enum
 /// This ensures type safety when communicating with the backend
-
 use serde::{Serialize, Deserialize};
+
+/// Backend response for XDR generation
+#[derive(Debug, Deserialize)]
+pub struct XdrResponse {
+    pub success: bool,
+    pub xdr: String,
+    pub message: String,
+}
+
+/// Backend response for transaction submission
+#[derive(Debug, Deserialize)]
+pub struct SubmitResponse {
+    pub success: bool,
+    pub result: String,
+    pub transaction_hash: String,
+    pub message: String,
+}
 
 /// Available contract functions with their signatures
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
@@ -19,6 +35,11 @@ pub enum ContractFunction {
     /// edge_case_test_yew_123_end(edge_input: string) -> string
     EdgeCaseTestYew123End { edge_input: String },
 }
+
+// Include tests module
+#[cfg(test)]
+#[path = "types_test.rs"]
+mod types_test;
 
 impl ContractFunction {
     /// Get the function name as it appears in the contract
@@ -69,17 +90,6 @@ impl ContractFunction {
         }
     }
 
-    /// Get the icon for the function
-    pub fn icon(&self) -> &'static str {
-        match self {
-            ContractFunction::Hello { .. } => "👋",
-            ContractFunction::HelloYew { .. } => "🌳",
-            ContractFunction::Simple => "⚡",
-            ContractFunction::TestFunc123 { .. } => "🧪",
-            ContractFunction::X { .. } => "❌",
-            ContractFunction::EdgeCaseTestYew123End { .. } => "🔍",
-        }
-    }
 
     /// Get all available functions with default parameters for UI
     pub fn all_functions() -> Vec<ContractFunction> {

@@ -33,15 +33,38 @@ pub enum AppError {
 
     #[error("Internal server error: {0}")]
     Internal(String),
+
+    #[error("Database error: {0}")]
+    Database(String),
+
+    // Authentication errors
+    #[error("Bad request: {0}")]
+    BadRequest(String),
+
+    #[error("Unauthorized: {0}")]
+    Unauthorized(String),
+
+    #[error("Forbidden: {0}")]
+    Forbidden(String),
+
+    #[error("Conflict: {0}")]
+    Conflict(String),
+
+    #[error("Not found: {0}")]
+    NotFound(String),
 }
 
 impl AppError {
     pub fn status_code(&self) -> StatusCode {
         match self {
-            AppError::Config(_) | AppError::Internal(_) | AppError::TaskExecution(_) => {
+            AppError::Config(_) | AppError::Internal(_) | AppError::TaskExecution(_) | AppError::Database(_) => {
                 StatusCode::INTERNAL_SERVER_ERROR
             }
-            AppError::InvalidInput(_) => StatusCode::BAD_REQUEST,
+            AppError::InvalidInput(_) | AppError::BadRequest(_) => StatusCode::BAD_REQUEST,
+            AppError::Unauthorized(_) => StatusCode::UNAUTHORIZED,
+            AppError::Forbidden(_) => StatusCode::FORBIDDEN,
+            AppError::Conflict(_) => StatusCode::CONFLICT,
+            AppError::NotFound(_) => StatusCode::NOT_FOUND,
             AppError::StellarRpc(_) | AppError::Transaction(_) | AppError::Account(_) => {
                 StatusCode::BAD_GATEWAY
             }
@@ -60,6 +83,12 @@ impl AppError {
             AppError::TaskExecution(_) => "TASK_EXECUTION_ERROR",
             AppError::InvalidInput(_) => "INVALID_INPUT",
             AppError::Internal(_) => "INTERNAL_ERROR",
+            AppError::Database(_) => "DATABASE_ERROR",
+            AppError::BadRequest(_) => "BAD_REQUEST",
+            AppError::Unauthorized(_) => "UNAUTHORIZED",
+            AppError::Forbidden(_) => "FORBIDDEN",
+            AppError::Conflict(_) => "CONFLICT",
+            AppError::NotFound(_) => "NOT_FOUND",
         }
     }
 }
@@ -92,5 +121,11 @@ pub type Result<T> = std::result::Result<T, AppError>;
 impl From<tokio::task::JoinError> for AppError {
     fn from(err: tokio::task::JoinError) -> Self {
         AppError::TaskExecution(err.to_string())
+    }
+}
+
+impl From<sqlx::Error> for AppError {
+    fn from(err: sqlx::Error) -> Self {
+        AppError::Database(err.to_string())
     }
 }

@@ -27,7 +27,7 @@ pub fn contract_section(props: &ContractProps) -> Html {
     let functions = ContractFunction::all_functions();
 
     // State for selected dropdown value
-    let selected_dropdown_value = use_state(|| String::new());
+    let selected_dropdown_value = use_state(String::new);
 
     let on_dropdown_change = {
         let selected_dropdown_value = selected_dropdown_value.clone();
@@ -85,7 +85,7 @@ pub fn contract_section(props: &ContractProps) -> Html {
                             {functions.iter().map(|function| {
                                 html! {
                                     <option value={function.name()}>
-                                        {format!("{} {}", function.icon(), function.display_name())}
+                                        {function.display_name()}
                                     </option>
                                 }
                             }).collect::<Html>()}
@@ -103,7 +103,7 @@ pub fn contract_section(props: &ContractProps) -> Html {
                     {if let Some(ref selected_func) = props.selected_function {
                         html! {
                             <div class="selected-function-info">
-                                <h3>{format!("{} {}", selected_func.icon(), selected_func.display_name())}</h3>
+                                <h3>{selected_func.display_name()}</h3>
                                 <p class="function-signature">{selected_func.signature()}</p>
                                 <p class="function-description">{selected_func.description()}</p>
 
@@ -113,9 +113,9 @@ pub fn contract_section(props: &ContractProps) -> Html {
                                     disabled={execute_button_disabled}
                                 >
                                     {if props.is_processing {
-                                        "⏳ Processing...".to_string()
+                                        "Processing...".to_string()
                                     } else {
-                                        format!("🚀 Execute {}", selected_func.display_name())
+                                        format!("Execute {}", selected_func.display_name())
                                     }}
                                 </button>
                             </div>

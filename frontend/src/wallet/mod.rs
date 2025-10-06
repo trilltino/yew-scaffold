@@ -2,7 +2,6 @@
 ///
 /// This module provides a clean, type-safe interface for Freighter wallet
 /// connection and transaction signing using direct WASM bindings.
-
 pub mod freighter;
 
 pub use freighter::{is_freighter_available, connect_wallet, sign_transaction};

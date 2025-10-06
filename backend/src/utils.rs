@@ -12,10 +12,14 @@ pub fn create_cors_layer(allowed_origins: Vec<String>) -> CorsLayer {
     if allowed_origins.is_empty() || allowed_origins.contains(&"*".to_string()) {
         cors = cors.allow_origin(Any);
     } else {
-        for origin in allowed_origins {
-            if let Ok(origin_header) = origin.parse::<axum::http::HeaderValue>() {
-                cors = cors.allow_origin(origin_header);
-            }
+        // Parse all origins at once for proper matching
+        let parsed_origins: Vec<axum::http::HeaderValue> = allowed_origins
+            .iter()
+            .filter_map(|origin| origin.parse().ok())
+            .collect();
+
+        if !parsed_origins.is_empty() {
+            cors = cors.allow_origin(parsed_origins);
         }
     }
 

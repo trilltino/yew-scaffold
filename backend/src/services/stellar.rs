@@ -71,47 +71,53 @@ pub async fn generate_hello_yew_xdr(config: &XdrConfig, source_account: &str, fu
     let account = Account::new(source_account, &account_response.sequence_number())
         .map_err(|e| AppError::Account(format!("Failed to create account: {:?}", e)))?;
 
-    let account_rc = Rc::new(RefCell::new(account));
-    let mut tx_builder = TransactionBuilder::new(
-        account_rc,
-        &config.network_passphrase,
-        None
-    );
+    // Build transaction in a scope to ensure Rc<RefCell<>> is dropped before await
+    let tx = {
+        let account_rc = Rc::new(RefCell::new(account));
+        let mut tx_builder = TransactionBuilder::new(
+            account_rc,
+            &config.network_passphrase,
+            None
+        );
 
-    debug!("Setting fee: 1,000,000 stroops");
-    tx_builder.fee(1000000u32);
+        debug!("Setting fee: 1,000,000 stroops");
+        tx_builder.fee(1000000u32);
 
-    info!("Creating contract call for function: {}", function.name());
-    debug!("Contract ID: {}", config.contract_id);
+        info!("Creating contract call for function: {}", function.name());
+        debug!("Contract ID: {}", config.contract_id);
 
-    let contract = Contracts::new(&config.contract_id)
-        .map_err(|e| {
-            error!("Contract creation failed: {:?}", e);
-            AppError::Transaction(format!("Failed to create contract: {:?}", e))
-        })?;
+        let contract = Contracts::new(&config.contract_id)
+            .map_err(|e| {
+                error!("Contract creation failed: {:?}", e);
+                AppError::Transaction(format!("Failed to create contract: {:?}", e))
+            })?;
 
-    debug!("Contract object created successfully");
+        debug!("Contract object created successfully");
 
-    let function_name = function.name();
-    info!("Creating contract call for function: {}", function_name);
+        let function_name = function.name();
+        info!("Creating contract call for function: {}", function_name);
 
-    // Get parameters from the function
-    let params = function.to_scval_params();
-    debug!("Function parameters: {} params", params.len());
+        // Get parameters from the function
+        let params = function.to_scval_params()?;
+        debug!("Function parameters: {} params", params.len());
 
-    let invoke_operation = if params.is_empty() {
-        contract.call(function_name, None)
-    } else {
-        contract.call(function_name, Some(params))
+        let invoke_operation = if params.is_empty() {
+            contract.call(function_name, None)
+        } else {
+            contract.call(function_name, Some(params))
+        };
+        debug!("Contract invoke operation created successfully");
+        info!("Adding operation to transaction builder");
+        tx_builder.add_operation(invoke_operation);
+        debug!("Operation added to transaction builder");
+
+        info!("Building transaction");
+        let tx = tx_builder.build();
+        debug!("Raw transaction built successfully");
+
+        tx
+        // account_rc and tx_builder are dropped here
     };
-    debug!("Contract invoke operation created successfully");
-    info!("Adding operation to transaction builder");
-    tx_builder.add_operation(invoke_operation);
-    debug!("Operation added to transaction builder");
-
-    info!("Building transaction");
-    let tx = tx_builder.build();
-    debug!("Raw transaction built successfully");
 
     info!("Preparing transaction (adding footprint and resource fees)");
     let prepared_tx = rpc.prepare_transaction(&tx).await
@@ -181,28 +187,28 @@ pub async fn submit_signed_transaction(signed_xdr: &str, function: &ContractFunc
 
     // Create detailed contract execution summary
     let contract_result = format!(
-        "🎉 Contract function '{}' ready for execution!\n\n\
-        📋 Function: {}\n\
-        📝 Description: {}\n\
-        ✅ Transaction Status: SIGNED & VALIDATED\n\
-        🔗 Transaction ID: {}\n\
-        📄 Signed XDR Length: {} characters\n\
-        📦 Contract ID: {}\n\
-        🌐 Network: Stellar Testnet\n\n\
-        📊 Transaction Analysis:\n\
-        • XDR successfully decoded ✓\n\
-        • Transaction properly signed ✓\n\
-        • Contract call structure valid ✓\n\
-        • Ready for network submission ✓\n\n\
-        💡 Expected Result: Function will execute and return a value\n\
-        ⛽ Estimated Fee: ~1,000,000 stroops\n\n\
-        🚀 To submit to live network:\n\
+        "Contract function '{}' ready for execution!\n\n\
+        Function: {}\n\
+        Description: {}\n\
+        Transaction Status: SIGNED & VALIDATED\n\
+        Transaction ID: {}\n\
+        Signed XDR Length: {} characters\n\
+        Contract ID: {}\n\
+        Network: Stellar Testnet\n\n\
+        Transaction Analysis:\n\
+        • XDR successfully decoded\n\
+        • Transaction properly signed\n\
+        • Contract call structure valid\n\
+        • Ready for network submission\n\n\
+        Expected Result: Function will execute and return a value\n\
+        Estimated Fee: ~1,000,000 stroops\n\n\
+        To submit to live network:\n\
         stellar contract invoke \\\n\
         --id {} \\\n\
         --source-account YOUR_ACCOUNT \\\n\
         --network testnet \\\n\
         -- {}\n\n\
-        ⚠️ This transaction is ready but not yet submitted to the network.",
+        WARNING: This transaction is ready but not yet submitted to the network.",
         function.name(),
         function.signature(),
         function.description(),

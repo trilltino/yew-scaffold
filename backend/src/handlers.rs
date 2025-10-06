@@ -1,14 +1,17 @@
+pub mod auth;
+pub mod soroban;
+
 use axum::{extract::Query, response::Json, extract::State};
-use tracing::{info, warn};
+use tracing::info;
 
 use crate::config::AppState;
-use crate::error::{AppError, Result};
+use crate::error::Result;
 use crate::types::{XdrRequest, XdrResponse, SubmitRequest, SubmitResponse, HealthResponse};
 use crate::services::stellar::{generate_hello_yew_xdr, submit_signed_transaction};
-use crate::services::stellar::XdrConfig;
+use crate::utils::truncate_address;
 
 pub async fn generate_xdr_handler(
-    State(_state): State<AppState>,
+    State(state): State<AppState>,
     Query(params): Query<XdrRequest>,
 ) -> Result<Json<XdrResponse>> {
     let wallet_info = params.wallet_type.as_deref().unwrap_or("unknown");
@@ -21,38 +24,26 @@ pub async fn generate_xdr_handler(
 
     info!("Selected function: {} ({})", function.name(), function.signature());
 
-    let test_config = XdrConfig::default();
+    // Use XdrConfig from shared AppState instead of creating a new default
+    let xdr_config = state.xdr_config.clone();
 
-    info!("Generating XDR for test account: {}...{}, function: {}",
-          &source_account[..6], &source_account[source_account.len()-6..], function.name());
+    info!("Generating XDR for account: {}, function: {}",
+          truncate_address(&source_account), function.name());
+    info!("Using contract: {}", xdr_config.contract_id);
+    info!("Network: {}", xdr_config.network_passphrase);
 
-    let result = tokio::task::spawn_blocking(move || {
-        tokio::runtime::Handle::current().block_on(async move {
-            generate_hello_yew_xdr(&test_config, &source_account, &function).await
-        })
-    }).await;
+    // Directly await the async function - no need for spawn_blocking
+    let xdr = generate_hello_yew_xdr(&xdr_config, &source_account, &function).await?;
 
-    match result {
-        Ok(Ok(xdr)) => {
-            info!("✅ XDR generated successfully for Freighter wallet signing");
-            Ok(Json(XdrResponse::success(
-                xdr,
-                "XDR generated successfully for Freighter wallet".to_string(),
-            )))
-        }
-        Ok(Err(error)) => {
-            warn!("❌ XDR generation failed: {}", error);
-            Err(AppError::XdrEncoding(error.to_string()))
-        }
-        Err(join_error) => {
-            warn!("❌ Task join failed: {}", join_error);
-            Err(AppError::TaskExecution(join_error.to_string()))
-        }
-    }
+    info!("XDR generated successfully for {} wallet signing", wallet_info);
+    Ok(Json(XdrResponse::success(
+        xdr,
+        format!("XDR generated successfully for {} wallet", wallet_info),
+    )))
 }
 
 pub async fn submit_transaction_handler(
-    State(_state): State<AppState>,
+    State(state): State<AppState>,
     Json(payload): Json<SubmitRequest>,
 ) -> Result<Json<SubmitResponse>> {
     let wallet_info = payload.wallet_type.as_deref().unwrap_or("unknown");
@@ -63,30 +54,19 @@ pub async fn submit_transaction_handler(
 
     let function = payload.get_function();
 
-    let result = tokio::task::spawn_blocking(move || {
-        tokio::runtime::Handle::current().block_on(async move {
-            submit_signed_transaction(&payload.signed_xdr, &function).await
-        })
-    }).await;
+    // Clone contract_id from shared state for logging/validation
+    let contract_id = state.xdr_config.contract_id.clone();
+    info!("Submitting transaction for contract: {}", contract_id);
 
-    match result {
-        Ok(Ok((hash, contract_result))) => {
-            info!("✅ Transaction submitted successfully: {}", hash);
-            Ok(Json(SubmitResponse::success(
-                contract_result,
-                hash,
-                "Contract executed successfully".to_string(),
-            )))
-        }
-        Ok(Err(error)) => {
-            warn!("❌ Transaction submission failed: {}", error);
-            Err(AppError::Transaction(error.to_string()))
-        }
-        Err(join_error) => {
-            warn!("❌ Task join failed: {}", join_error);
-            Err(AppError::TaskExecution(join_error.to_string()))
-        }
-    }
+    // Directly await the async function - no need for spawn_blocking
+    let (hash, contract_result) = submit_signed_transaction(&payload.signed_xdr, &function).await?;
+
+    info!("Transaction submitted successfully from {} wallet: {}", wallet_info, hash);
+    Ok(Json(SubmitResponse::success(
+        contract_result,
+        hash,
+        format!("Contract executed successfully via {} wallet", wallet_info),
+    )))
 }
 
 

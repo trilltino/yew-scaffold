@@ -2,7 +2,6 @@
 ///
 /// This module provides a clean, type-safe interface to the Freighter wallet
 /// using proper WASM bindings and robust error handling.
-
 use js_sys::{Function, Promise, Reflect};
 use std::fmt;
 use wasm_bindgen::JsCast;
@@ -99,8 +98,8 @@ pub async fn is_freighter_available() -> bool {
         .unwrap_or(JsValue::UNDEFINED);
 
     if is_connected.is_function() {
-        if let Some(func) = is_connected.dyn_into::<Function>().ok() {
-            if let Some(promise) = func.call0(&api).ok() {
+        if let Ok(func) = is_connected.dyn_into::<Function>() {
+            if let Ok(promise) = func.call0(&api) {
                 if let Ok(promise) = promise.dyn_into::<Promise>() {
                     if let Ok(result) = JsFuture::from(promise).await {
                         if let Ok(obj) = result.dyn_into::<js_sys::Object>() {
@@ -148,14 +147,14 @@ pub async fn connect_wallet() -> Result<String, FreighterError> {
                     Ok(result) => {
                         // Try to extract public key from various response formats
                         if let Some(public_key) = result.as_string() {
-                            console::log_1(&"✅ Freighter connected".into());
+                            console::log_1(&"Freighter connected".into());
                             return Ok(public_key);
                         } else if let Ok(obj) = result.clone().dyn_into::<js_sys::Object>() {
                             // Try different property names
                             for prop in &["address", "publicKey", "account"] {
                                 if let Ok(addr) = Reflect::get(&obj, &JsValue::from_str(prop)) {
                                     if let Some(addr_str) = addr.as_string() {
-                                        console::log_1(&"✅ Freighter connected".into());
+                                        console::log_1(&"Freighter connected".into());
                                         return Ok(addr_str);
                                     }
                                 }
@@ -196,14 +195,14 @@ pub async fn sign_transaction(xdr: &str, network_passphrase: &str) -> Result<Str
         Ok(result) => {
             // Extract signed XDR from result
             if let Some(signed_xdr) = result.as_string() {
-                console::log_1(&"✅ Transaction signed".into());
+                console::log_1(&"Transaction signed".into());
                 Ok(signed_xdr)
             } else if let Ok(obj) = result.clone().dyn_into::<js_sys::Object>() {
                 // Try different property names for signed XDR
                 for prop in &["signedTxXdr", "signedXdr", "xdr", "result"] {
                     if let Ok(xdr_val) = Reflect::get(&obj, &JsValue::from_str(prop)) {
                         if let Some(xdr_str) = xdr_val.as_string() {
-                            console::log_1(&"✅ Transaction signed".into());
+                            console::log_1(&"Transaction signed".into());
                             return Ok(xdr_str);
                         }
                     }
