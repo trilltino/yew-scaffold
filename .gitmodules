@@ -1,0 +1,9 @@
+[submodule "reference/rust-web-app"]
+	path = reference/rust-web-app
+	url = https://github.com/rust10x/rust-web-app.git
+[submodule "reference/axum"]
+	path = reference/axum
+	url = https://github.com/tokio-rs/axum.git
+[submodule "reference/yew"]
+	path = reference/yew
+	url = https://github.com/yewstack/yew.git
